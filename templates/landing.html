@@ -1,0 +1,935 @@
+# RecruiterVisionAI — Futuristic Landing Page (Flask Compatible)
+
+Save this as:
+
+```bash
+templates/landing.html
+```
+
+---
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruiterVisionAI</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #050816;
+            overflow-x: hidden;
+            color: white;
+            cursor: none;
+        }
+
+        /* ================= CUSTOM CURSOR ================= */
+
+        .cursor {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #3b82f6;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            transition: transform 0.15s ease;
+            box-shadow: 0 0 20px #3b82f6;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: #60a5fa;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ================= BACKGROUND ================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: -2;
+        }
+
+        .gradient {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(59,130,246,0.22), transparent 70%);
+            top: -300px;
+            right: -200px;
+            animation: pulse 7s infinite alternate;
+        }
+
+        .gradient2 {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
+            bottom: -250px;
+            left: -150px;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.25);
+            }
+        }
+
+        /* GRID */
+
+        .grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+        }
+
+        /* PARTICLES */
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(96,165,250,0.8);
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-1200px);
+                opacity: 0;
+            }
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 8%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            background: rgba(5,8,22,0.45);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #60a5fa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .btn {
+            padding: 14px 26px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 55%);
+            transform: scale(0);
+            transition: 0.5s ease;
+        }
+
+        .btn:hover::before {
+            transform: scale(1);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            border-color: #3b82f6;
+            box-shadow: 0 0 30px rgba(59,130,246,0.5);
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border: none;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 140px 8%;
+            position: relative;
+            gap: 40px;
+        }
+
+        .hero-left {
+            width: 55%;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(96,165,250,0.3);
+            margin-bottom: 24px;
+            color: #93c5fd;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 28px;
+            font-weight: 700;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            max-width: 700px;
+        }
+
+        .typing {
+            margin-top: 26px;
+            font-size: 1rem;
+            color: #60a5fa;
+            min-height: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        /* ================= AI CARD ================= */
+
+        .hero-right {
+            width: 45%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ai-card {
+            width: 430px;
+            height: 500px;
+            border-radius: 28px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(59,130,246,0.15);
+        }
+
+        .scanner {
+            position: absolute;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom,
+                transparent,
+                rgba(59,130,246,0.45),
+                transparent);
+            animation: scan 4s infinite linear;
+        }
+
+        @keyframes scan {
+            from {
+                transform: translateY(-150px);
+            }
+            to {
+                transform: translateY(550px);
+            }
+        }
+
+        .resume-preview {
+            position: absolute;
+            inset: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 28px;
+        }
+
+        .resume-line {
+            height: 14px;
+            background: linear-gradient(to right, rgba(96,165,250,0.8), transparent);
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .resume-line:nth-child(1) {
+            width: 80%;
+        }
+
+        .resume-line:nth-child(2) {
+            width: 50%;
+        }
+
+        .resume-line:nth-child(3) {
+            width: 95%;
+        }
+
+        .resume-line:nth-child(4) {
+            width: 75%;
+        }
+
+        .resume-line:nth-child(5) {
+            width: 88%;
+        }
+
+        .ats-circle {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 8px solid rgba(96,165,250,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #60a5fa;
+            box-shadow: 0 0 25px rgba(96,165,250,0.35);
+        }
+
+        /* ================= TEAM SECTION ================= */
+
+        .section {
+            padding: 120px 8%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 18px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 70px;
+        }
+
+        .team-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .team-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            padding: 34px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+            transition: 0.4s ease;
+            backdrop-filter: blur(18px);
+        }
+
+        .team-content {
+            flex: 1;
+        }
+
+        @media(max-width: 768px) {
+
+            .team-card {
+                flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            position: relative;
+            padding: 34px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+            transition: 0.4s ease;
+            backdrop-filter: blur(18px);
+        }
+
+        .team-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), transparent);
+            opacity: 0;
+            transition: 0.4s ease;
+        }
+
+        .team-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-card:hover {
+            transform: translateY(-12px) rotateX(5deg);
+            box-shadow: 0 0 40px rgba(59,130,246,0.18);
+            border-color: rgba(96,165,250,0.3);
+        }
+
+        /* TEAM IMAGE */
+
+        .team-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            overflow: hidden;
+            border: 3px solid rgba(96,165,250,0.5);
+            box-shadow: 0 0 30px rgba(59,130,246,0.25);
+            position: relative;
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-image::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(59,130,246,0.15), transparent);
+        }
+
+        .team-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .role {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .team-card p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #94a3b8;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 1100px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-left,
+            .hero-right {
+                width: 100%;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+        }
+
+        @media(max-width: 768px) {
+
+            nav {
+                padding: 20px 5%;
+            }
+
+            .hero {
+                padding: 150px 5% 100px;
+            }
+
+            .section {
+                padding: 100px 5%;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .ai-card {
+                width: 100%;
+                height: 450px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- CURSOR -->
+
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+        <div class="gradient"></div>
+        <div class="gradient2"></div>
+        <div class="grid"></div>
+    </div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+        <div class="logo">RecruiterVisionAI</div>
+
+        <div class="nav-buttons">
+            <button class="btn">Sign In</button>
+            <button class="btn primary">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <div class="tag">
+                <i data-lucide="sparkles"></i>
+                AI Recruitment Intelligence Platform
+            </div>
+
+            <h1>
+                The Future of <br>
+                <span class="gradient-text">Resume Intelligence</span>
+            </h1>
+
+            <p>
+                RecruiterVision AI is an advanced AI-powered recruitment intelligence platform designed to analyze resumes beyond traditional ATS systems.
+                
+                By combining Natural Language Processing, Machine Learning, and semantic analysis, the system evaluates resume quality, detects skill gaps, measures ATS compatibility, and delivers recruiter-grade insights in real time.
+            </p>
+
+            <div class="typing" id="typing"></div>
+
+            <div class="hero-buttons">
+                <button class="btn primary">Launch Dashboard</button>
+                <button class="btn">Explore Features</button>
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+
+            <div class="ai-card">
+
+                <div class="scanner"></div>
+
+                <div class="resume-preview">
+
+                    <div class="resume-line"></div>
+                    <div class="resume-line"></div>
+                    <div class="resume-line"></div>
+                    <div class="resume-line"></div>
+                    <div class="resume-line"></div>
+
+                    <div class="ats-circle">
+                        91%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- TEAM SECTION -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            The Minds Behind The Intelligence
+        </h2>
+
+        <p class="section-subtitle">
+            A multidisciplinary team of developers and AI enthusiasts working together to build the future of intelligent recruitment systems.
+            
+            Combining expertise in Machine Learning, NLP, UI/UX design, and backend engineering, the team behind RecruiterVision AI is focused on creating a platform that feels futuristic, practical, and impactful.
+        </p>
+
+        <div class="team-grid">
+
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="{{ url_for('static', filename='images/vidhi.jpg') }}" alt="Vidhi Patel">
+                </div>
+                <h3>Vidhi Patel</h3>
+                <div class="role">Team Leader • AI & System Architecture</div>
+                <p>
+                    Leading the vision, system workflow, and AI integration behind RecruiterVision AI while coordinating frontend, backend, and NLP pipeline development.
+                </p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/divyanshi.jpg" alt="Divyanshi Rana">
+                </div>
+                <h3>Divyanshi Rana</h3>
+                <div class="role">Frontend & Interactive Experience Developer</div>
+                <p>
+                    Focused on crafting immersive UI experiences, interactive animations, and futuristic visual design systems for the platform.
+                </p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/vishwa.jpg" alt="Vishwa Prajapati">
+                </div>
+                <h3>Vishwa Prajapati</h3>
+                <div class="role">Backend & Processing Engineer</div>
+                <p>
+                    Responsible for backend architecture, resume parsing pipelines, and intelligent data processing modules.
+                </p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/shivani.jpg" alt="Shivani Prajapati">
+                </div>
+                <h3>Shivani Prajapati</h3>
+                <div class="role">NLP & AI Intelligence Developer</div>
+                <p>
+                    Working on skill extraction, ATS scoring logic, semantic analysis, and recruiter-style AI feedback systems.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+        Powered by AI • Built with Vision • Designed for the Future
+    </footer>
+
+    <!-- JS -->
+
+    <script>
+
+        lucide.createIcons();
+
+        // ================= PARTICLES =================
+
+        const bg = document.querySelector('.background');
+
+        for(let i = 0; i < 60; i++) {
+
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 4 + 2;
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = Math.random() * window.innerHeight + 'px';
+            particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            particle.style.opacity = Math.random();
+
+            bg.appendChild(particle);
+
+        }
+
+        // ================= CUSTOM CURSOR =================
+
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+
+        });
+
+        // ================= MAGNETIC BUTTON =================
+
+        const buttons = document.querySelectorAll('.btn');
+
+        buttons.forEach(btn => {
+
+            btn.addEventListener('mousemove', (e) => {
+
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, {
+                    x: x * 0.2,
+                    y: y * 0.2,
+                    duration: 0.3
+                });
+
+            });
+
+            btn.addEventListener('mouseleave', () => {
+
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.3
+                });
+
+            });
+
+        });
+
+        // ================= TYPING EFFECT =================
+
+        const texts = [
+            'Initializing NLP Engine...',
+            'Scanning Resume Structure...',
+            'Calculating ATS Compatibility...',
+            'Detecting Technical Skills...',
+            'Generating Recruiter Insights...',
+            'AI System Online.'
+        ];
+
+        let count = 0;
+        let index = 0;
+        let currentText = '';
+        let letter = '';
+
+        (function type() {
+
+            if(count === texts.length) {
+                count = 0;
+            }
+
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            document.getElementById('typing').textContent = letter;
+
+            if(letter.length === currentText.length) {
+
+                count++;
+                index = 0;
+
+                setTimeout(type, 1500);
+
+            } else {
+
+                setTimeout(type, 60);
+
+            }
+
+        })();
+
+        // ================= PARALLAX EFFECT =================
+
+        document.addEventListener('mousemove', (e) => {
+
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            gsap.to('.gradient', {
+                x: x * 60,
+                y: y * 60,
+                duration: 1
+            });
+
+            gsap.to('.gradient2', {
+                x: -x * 60,
+                y: -y * 60,
+                duration: 1
+            });
+
+            gsap.to('.ai-card', {
+                rotateY: (x - 0.5) * 14,
+                rotateX: -(y - 0.5) * 14,
+                duration: 1
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
+
+---
+
+# Flask Route
+
+Add this inside `app.py`
+
+```python
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def landing():
+    return render_template('landing.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+---
+
+# Run Project
+
+```bash
+python app.py
+```
+
+Then open:
+
+```bash
+http://127.0.0.1:5000
+```
+
+---
+
+# Add Team Photos
+
+Create this folder:
+
+```bash
+static/images/
+```
+
+Add your images:
+
+```bash
+vidhi.jpg
+divyanshi.jpg
+vishwa.jpg
+shivani.jpg
+```
+
+Then Flask will automatically show them inside glowing futuristic team cards 😭🔥
+
+---
+
+# Features Included
+
+✅ Mouse Reactive Background
+✅ Futuristic AI Theme
+✅ Animated Particles
+✅ Custom AI Cursor
+✅ Magnetic Hover Buttons
+✅ Scanner Animation
+✅ Glassmorphism UI
+✅ Team Cards
+✅ Typing Animation
+✅ 3D Parallax Motion
+✅ Flask Compatible

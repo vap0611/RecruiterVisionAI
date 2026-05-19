@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruiterVision AI - Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        body {
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        .auth-container {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid #e2e8f0;
+        }
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .brand-logo h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            letter-spacing: -0.025em;
+        }
+        .brand-logo h2 span {
+            color: #2563eb;
+        }
+        .brand-logo p {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #475569;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #f8fafc;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: #2563eb;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 0.5rem;
+        }
+        .auth-btn:hover {
+            background-color: #1d4ed8;
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        .auth-footer a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="brand-logo">
+            <h2>RecruiterVision <span>AI</span></h2>
+            <p>{% if mode == 'login' %}Welcome back! Sign in to continue.{% else %}Create an account to analyze resumes.{% endif %}</p>
+        </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div style="
+                padding: 0.75rem 1rem; 
+                margin-bottom: 1rem; 
+                border-radius: 8px; 
+                font-size: 0.875rem; 
+                font-weight: 500;
+                text-align: center;
+                {% if category == 'error' %}
+                background-color: '#fee2e2'; 
+                color: #991b1b; 
+                border: 1px solid #fca5a5;
+                {% else %}
+                background-color: #dcfce7; 
+                color: #166534; 
+                border: 1px solid #86efac;
+                {% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+        <form action="{% if mode == 'login' %}{{ url_for('login') }}{% else %}{{ url_for('signup') }}{% endif %}" method="POST">
+            {% if mode == 'signup' %}
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter name" required>
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            {% if mode == 'signup' %}
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+            </div>
+            {% endif %}
+
+            <button type="submit" class="auth-btn">
+                {% if mode == 'login' %}Sign In{% else %}Sign Up{% endif %}
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            {% if mode == 'login' %}
+                Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a>
+            {% else %}
+                Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
