@@ -1,5 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 import pyrebase # Firebase library
+import os
+
 
 app = Flask(__name__)
 app.secret_key = 'recruitervision_secret_key' # Flash messages ke liye zaruri hai
@@ -84,6 +86,37 @@ def signup():
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
+
+
+@app.route('/upload_resume', methods=['POST'])
+def upload_resume():
+    if 'resume_file' not in request.files:
+        flash('No file part detected in system pipeline.', 'error')
+        return redirect(url_for('dashboard'))
+        
+    file = request.files['resume_file']
+    jd_text = request.form.get('job_description') # Job description string input
+    
+    if file.filename == '':
+        flash('No resume file selected.', 'error')
+        return redirect(url_for('dashboard'))
+        
+    if file and file.filename.endswith('.pdf'):
+        # Upload folder ka path setup
+        file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(file_path)
+        
+        # Terminal pe metadata debug statements printable rahengi
+        print(f"DEBUG PIPELINE: File saved successfully at {file_path}")
+        print(f"DEBUG PIPELINE: Job Description length parsed: {len(jd_text or '')}")
+        
+        flash(f'File "{file.filename}" successfully uploaded for system parsing!', 'success')
+        
+        # Jese hi parsing logic setup hoga, yahan se algorithms connect karenge!
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Extension error. Please process structural PDF formats only.', 'error')
+        return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -18,7 +18,6 @@
             display: flex;
             min-height: 100vh;
         }
-        /* Sidebar layout */
         .sidebar {
             width: 260px;
             background-color: #0f172a;
@@ -57,8 +56,6 @@
             background-color: #1e3a8a;
             color: #ffffff;
         }
-        
-        /* Main Workspace */
         .main-content {
             flex: 1;
             padding: 2.5rem;
@@ -93,12 +90,11 @@
             font-weight: 600;
             font-size: 0.875rem;
         }
-
-        /* Responsive Grid Panels */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
+            align-items: start;
         }
         .card {
             background: #ffffff;
@@ -113,8 +109,6 @@
             margin-bottom: 1.5rem;
             color: #0f172a;
         }
-        
-        /* Upload Area Drag & Drop Component */
         .upload-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 8px;
@@ -133,12 +127,6 @@
             color: #64748b;
             margin-top: 0.5rem;
         }
-        .upload-zone span {
-            color: #2563eb;
-            font-weight: 600;
-        }
-
-        /* Form Inputs */
         .jd-input {
             width: 100%;
             height: 130px;
@@ -146,7 +134,6 @@
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-size: 0.95rem;
-            margin-top: 1rem;
             resize: none;
             outline: none;
             background-color: #f8fafc;
@@ -157,9 +144,7 @@
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
         }
-
         .action-btn {
-            margin-top: 1.5rem;
             padding: 0.8rem 1.75rem;
             background-color: #2563eb;
             color: white;
@@ -172,8 +157,6 @@
         .action-btn:hover {
             background-color: #1d4ed8;
         }
-
-        /* Side Activity Metrics */
         .stats-panel {
             display: flex;
             flex-direction: column;
@@ -221,21 +204,37 @@
             </div>
         </div>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="padding: 1rem; margin-bottom: 1.5rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+                {% if category == 'error' %} background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5;
+                {% else %} background-color: #dcfce7; color: #166534; border: 1px solid #86efac; {% endif %}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <div class="dashboard-grid">
-            <div class="card">
+            
+            <form action="{{ url_for('upload_resume') }}" method="POST" enctype="multipart/form-data" id="uploadForm" class="card" style="margin: 0;">
                 <h3>New Analysis Pipeline</h3>
-                <div class="upload-zone">
-                    <p>Drag and drop applicant resume here, or <span>browse files</span></p>
+                
+                <input type="file" id="fileInput" name="resume_file" accept=".pdf" style="display: none;" onchange="updateFileName()">
+                
+                <div class="upload-zone" onclick="triggerBrowse()" id="dropZone" style="margin-bottom: 1.5rem;">
+                    <p id="uploadText">Drag and drop applicant resume here, or <span style="color: #2563eb; font-weight:600; text-decoration: underline;">browse files</span></p>
                     <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Supports PDF or standard text documents</p>
                 </div>
                 
-                <div style="margin-top: 1.5rem;">
-                    <label style="font-size: 0.875rem; font-weight: 500; color: #475569;">Target Job Description (JD) Matrix</label>
-                    <textarea class="jd-input" placeholder="Paste structural job description fields here for system semantic analysis..."></textarea>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="font-size: 0.875rem; font-weight: 500; color: #475569; display: block; margin-bottom: 0.5rem;">Target Job Description (JD) Matrix</label>
+                    <textarea class="jd-input" name="job_description" placeholder="Paste structural job description fields here for system semantic analysis..."></textarea>
                 </div>
 
-                <button class="action-btn">Execute Matching Algorithm</button>
-            </div>
+                <button type="submit" class="action-btn">Execute Matching Algorithm</button>
+            </form>
 
             <div class="stats-panel">
                 <div class="stat-box">
@@ -245,6 +244,7 @@
                     </div>
                     <div class="value">0</div>
                 </div>
+                
                 <div class="stat-box">
                     <div>
                         <div class="title">Mean ATS Match</div>
@@ -253,8 +253,22 @@
                     <div class="value">--</div>
                 </div>
             </div>
+
         </div>
     </div>
 
+    <script>
+        function triggerBrowse() {
+            document.getElementById('fileInput').click();
+        }
+
+        function updateFileName() {
+            const input = document.getElementById('fileInput');
+            const textLabel = document.getElementById('uploadText');
+            if (input.files.length > 0) {
+                textLabel.innerHTML = `Selected File: <strong style="color: #1e3a8a;">${input.files[0].name}</strong>`;
+            }
+        }
+    </script>
 </body>
 </html>
