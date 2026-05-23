@@ -4,175 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecruiterVision AI - Authentication</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
+
         body {
-            background-color: #f8fafc;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            color: #1e293b;
+            justify-content: center;
+            color: #f8fafc;
         }
+
         .auth-container {
-            background: #ffffff;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 2.5rem;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
             width: 100%;
             max-width: 420px;
-            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        .brand-logo {
+
+        .auth-header {
             text-align: center;
             margin-bottom: 2rem;
         }
-        .brand-logo h2 {
+
+        .auth-header h1 {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #1e3a8a;
-            letter-spacing: -0.025em;
+            background: linear-gradient(to right, #38bdf8, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
-        .brand-logo h2 span {
-            color: #2563eb;
-        }
-        .brand-logo p {
+
+        .auth-header p {
+            color: #94a3b8;
             font-size: 0.875rem;
-            color: #64748b;
-            margin-top: 0.25rem;
         }
+
         .form-group {
             margin-bottom: 1.25rem;
         }
+
         .form-group label {
             display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
             margin-bottom: 0.5rem;
-            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #cbd5e1;
         }
-        .form-group input {
+
+        .form-control {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 1px solid #cbd5e1;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
+            color: #fff;
             font-size: 0.95rem;
-            background-color: #f8fafc;
             transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
             outline: none;
-        }
-        .form-group input:focus {
             border-color: #2563eb;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
-        .auth-btn {
+
+        .btn-submit {
             width: 100%;
-            padding: 0.85rem;
-            background-color: #2563eb;
-            color: white;
+            padding: 0.75rem;
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
             border: none;
             border-radius: 8px;
+            color: white;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
             margin-top: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
         }
-        .auth-btn:hover {
-            background-color: #1d4ed8;
+
+        .btn-submit:hover {
+            background: linear-gradient(to right, #1d4ed8, #1e40af);
+            transform: translateY(-1px);
         }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
         .auth-footer {
             text-align: center;
             margin-top: 1.5rem;
-            font-size: 0.875rem;
-            color: #64748b;
+            font-size: 0.85rem;
+            color: #94a3b8;
         }
+
         .auth-footer a {
-            color: #2563eb;
+            color: #38bdf8;
             text-decoration: none;
             font-weight: 500;
         }
+
         .auth-footer a:hover {
             text-decoration: underline;
+        }
+
+        /* Flash Messages styling */
+        .flash-messages {
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .flash-msg {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .flash-msg.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .flash-msg.success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
         }
     </style>
 </head>
 <body>
 
     <div class="auth-container">
-        <div class="brand-logo">
-            <h2>RecruiterVision <span>AI</span></h2>
-            <p>{% if mode == 'login' %}Welcome back! Sign in to continue.{% else %}Create an account to analyze resumes.{% endif %}</p>
-        </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-            <div style="
-                padding: 0.75rem 1rem; 
-                margin-bottom: 1rem; 
-                border-radius: 8px; 
-                font-size: 0.875rem; 
-                font-weight: 500;
-                text-align: center;
-                {% if category == 'error' %}
-                background-color: '#fee2e2'; 
-                color: #991b1b; 
-                border: 1px solid #fca5a5;
-                {% else %}
-                background-color: #dcfce7; 
-                color: #166534; 
-                border: 1px solid #86efac;
-                {% endif %}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-        <form action="{% if mode == 'login' %}{{ url_for('login') }}{% else %}{{ url_for('signup') }}{% endif %}" method="POST">
-            {% if mode == 'signup' %}
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter name" required>
-            </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash-msg {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
             {% endif %}
-            
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="name@example.com" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required>
-            </div>
-            {% if mode == 'signup' %}
-            <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
-            </div>
-            {% endif %}
+        {% endwith %}
 
-            <button type="submit" class="auth-btn">
-                {% if mode == 'login' %}Sign In{% else %}Sign Up{% endif %}
-            </button>
-        </form>
+        {% if mode == 'login' %}
+            <div class="auth-header">
+                <h1>RecruiterVision AI</h1>
+                <p>Developer Bypass Active - Click Login to enter</p>
+            </div>
 
-        <div class="auth-footer">
-            {% if mode == 'login' %}
-                Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a>
-            {% else %}
-                Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
-            {% endif %}
-        </div>
-    </div>
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" value="admin@test.com" class="form-control" placeholder="name@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" value="admin123" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Login To Dashboard</button>
+            </form>
+
+            <div class="auth-footer
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="{{ url_for('login') }}">Log In</a>
+            </div>
+        {% endif %} </div>
 
 </body>
 </html>
