@@ -1,935 +1,884 @@
-# RecruiterVisionAI — Futuristic Landing Page (Flask Compatible)
-
-Save this as:
-
-```bash
-templates/landing.html
-```
-
----
-
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecruiterVisionAI</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: #050816;
-            overflow-x: hidden;
-            color: white;
-            cursor: none;
-        }
-
-        /* ================= CUSTOM CURSOR ================= */
-
-        .cursor {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #3b82f6;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 99999;
-            transition: transform 0.15s ease;
-            box-shadow: 0 0 20px #3b82f6;
-        }
-
-        .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: #60a5fa;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-        }
-
-        /* ================= BACKGROUND ================= */
-
-        .background {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            z-index: -2;
-        }
-
-        .gradient {
-            position: absolute;
-            width: 900px;
-            height: 900px;
-            background: radial-gradient(circle, rgba(59,130,246,0.22), transparent 70%);
-            top: -300px;
-            right: -200px;
-            animation: pulse 7s infinite alternate;
-        }
-
-        .gradient2 {
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
-            bottom: -250px;
-            left: -150px;
-            animation: pulse 8s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-            }
-            to {
-                transform: scale(1.25);
-            }
-        }
-
-        /* GRID */
-
-        .grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
-        }
-
-        /* PARTICLES */
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(96,165,250,0.8);
-            animation: float 10s infinite linear;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(0px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-1200px);
-                opacity: 0;
-            }
-        }
-
-        /* ================= NAVBAR ================= */
-
-        nav {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 8%;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(18px);
-            background: rgba(5,8,22,0.45);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            background: linear-gradient(to right, #60a5fa, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 16px;
-        }
-
-        /* ================= BUTTONS ================= */
-
-        .btn {
-            padding: 14px 26px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s ease;
-            backdrop-filter: blur(20px);
-        }
-
-        .btn::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 55%);
-            transform: scale(0);
-            transition: 0.5s ease;
-        }
-
-        .btn:hover::before {
-            transform: scale(1);
-        }
-
-        .btn:hover {
-            transform: translateY(-5px) scale(1.03);
-            border-color: #3b82f6;
-            box-shadow: 0 0 30px rgba(59,130,246,0.5);
-        }
-
-        .primary {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border: none;
-        }
-
-        /* ================= HERO ================= */
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 140px 8%;
-            position: relative;
-            gap: 40px;
-        }
-
-        .hero-left {
-            width: 55%;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(59,130,246,0.08);
-            border: 1px solid rgba(96,165,250,0.3);
-            margin-bottom: 24px;
-            color: #93c5fd;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            line-height: 1;
-            margin-bottom: 28px;
-            font-weight: 700;
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #60a5fa, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-            max-width: 700px;
-        }
-
-        .typing {
-            margin-top: 26px;
-            font-size: 1rem;
-            color: #60a5fa;
-            min-height: 30px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        /* ================= AI CARD ================= */
-
-        .hero-right {
-            width: 45%;
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .ai-card {
-            width: 430px;
-            height: 500px;
-            border-radius: 28px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(59,130,246,0.15);
-        }
-
-        .scanner {
-            position: absolute;
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(to bottom,
-                transparent,
-                rgba(59,130,246,0.45),
-                transparent);
-            animation: scan 4s infinite linear;
-        }
-
-        @keyframes scan {
-            from {
-                transform: translateY(-150px);
-            }
-            to {
-                transform: translateY(550px);
-            }
-        }
-
-        .resume-preview {
-            position: absolute;
-            inset: 30px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 28px;
-        }
-
-        .resume-line {
-            height: 14px;
-            background: linear-gradient(to right, rgba(96,165,250,0.8), transparent);
-            border-radius: 10px;
-            margin-bottom: 18px;
-        }
-
-        .resume-line:nth-child(1) {
-            width: 80%;
-        }
-
-        .resume-line:nth-child(2) {
-            width: 50%;
-        }
-
-        .resume-line:nth-child(3) {
-            width: 95%;
-        }
-
-        .resume-line:nth-child(4) {
-            width: 75%;
-        }
-
-        .resume-line:nth-child(5) {
-            width: 88%;
-        }
-
-        .ats-circle {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 8px solid rgba(96,165,250,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #60a5fa;
-            box-shadow: 0 0 25px rgba(96,165,250,0.35);
-        }
-
-        /* ================= TEAM SECTION ================= */
-
-        .section {
-            padding: 120px 8%;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 18px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            max-width: 800px;
-            margin: auto;
-            color: #cbd5e1;
-            line-height: 1.8;
-            margin-bottom: 70px;
-        }
-
-        .team-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .team-card {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
-            transition: 0.4s ease;
-            backdrop-filter: blur(18px);
-        }
-
-        .team-content {
-            flex: 1;
-        }
-
-        @media(max-width: 768px) {
-
-            .team-card {
-                flex-direction: column;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .team-card {
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
-            transition: 0.4s ease;
-            backdrop-filter: blur(18px);
-        }
-
-        .team-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(59,130,246,0.12), transparent);
-            opacity: 0;
-            transition: 0.4s ease;
-        }
-
-        .team-card:hover::before {
-            opacity: 1;
-        }
-
-        .team-card:hover {
-            transform: translateY(-12px) rotateX(5deg);
-            box-shadow: 0 0 40px rgba(59,130,246,0.18);
-            border-color: rgba(96,165,250,0.3);
-        }
-
-        /* TEAM IMAGE */
-
-        .team-image {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            margin-bottom: 24px;
-            overflow: hidden;
-            border: 3px solid rgba(96,165,250,0.5);
-            box-shadow: 0 0 30px rgba(59,130,246,0.25);
-            position: relative;
-        }
-
-        .team-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .team-image::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(59,130,246,0.15), transparent);
-        }
-
-        .team-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .role {
-            color: #60a5fa;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .team-card p {
-            color: #cbd5e1;
-            line-height: 1.8;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            color: #94a3b8;
-        }
-
-        /* ================= RESPONSIVE ================= */
-
-        @media(max-width: 1100px) {
-
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-left,
-            .hero-right {
-                width: 100%;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: 4rem;
-            }
-
-        }
-
-        @media(max-width: 768px) {
-
-            nav {
-                padding: 20px 5%;
-            }
-
-            .hero {
-                padding: 150px 5% 100px;
-            }
-
-            .section {
-                padding: 100px 5%;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .ai-card {
-                width: 100%;
-                height: 450px;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecruiterVisionAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+<style>
+:root,[data-theme="dark"]{
+--bg:#050816;--bg-card:#ffffff;--bg-nav:rgba(5,8,22,0.80);
+--bd:rgba(0,0,0,0.08);--bd-h:rgba(37,99,235,0.35);
+--tx:#0f172a;--tx2:#475569;--tx3:#64748b;--tx4:#94a3b8;
+--ab:#2563eb;--abl:#3b82f6;--ap:#7c3aed;--apl:#8b5cf6;
+--ag:#059669;--agl:#10b981;--aa:#d97706;--aal:#f59e0b;
+--g1:rgba(37,99,235,0.07);--g2:rgba(109,40,217,0.05);
+--grid:rgba(99,179,237,0.05);
+--inp:#fff;--inpb:rgba(0,0,0,0.12);--inpf:rgba(37,99,235,0.04);
+--up:rgba(37,99,235,0.03);--upb:rgba(37,99,235,0.18);
+--tag:rgba(37,99,235,0.07);--tagb:rgba(37,99,235,0.18);--tagtx:#1d4ed8;
+--rb:rgba(239,68,68,0.22);--rbg:rgba(239,68,68,0.06);--rtx:#b91c1c;
+--ok:#065f46;--okbg:rgba(5,150,105,0.07);--okb:rgba(5,150,105,0.2);
+--er:#991b1b;--erbg:rgba(239,68,68,0.07);--erb:rgba(239,68,68,0.2);
+--il:#94a3b8;--iv:#0f172a;--ib:rgba(0,0,0,0.06);
+--topline:linear-gradient(to right,transparent,rgba(37,99,235,0.25),transparent);
+--foot:#94a3b8;--footb:rgba(0,0,0,0.07);
+--glow1:rgba(59,130,246,0.25);--glow2:rgba(124,58,237,0.2);
+}
+[data-theme="light"]{
+--bg:#f0f4f8;--bg-card:#ffffff;--bg-nav:rgba(240,244,248,0.92);
+--bd:rgba(0,0,0,0.08);--bd-h:rgba(37,99,235,0.35);
+--tx:#0f172a;--tx2:#475569;--tx3:#64748b;--tx4:#94a3b8;
+--ab:#2563eb;--abl:#3b82f6;--ap:#7c3aed;--apl:#8b5cf6;
+--ag:#059669;--agl:#10b981;--aa:#d97706;--aal:#f59e0b;
+--g1:rgba(37,99,235,0.07);--g2:rgba(109,40,217,0.05);
+--grid:rgba(0,0,0,0.05);
+--inp:#fff;--inpb:rgba(0,0,0,0.12);--inpf:rgba(37,99,235,0.04);
+--up:rgba(37,99,235,0.03);--upb:rgba(37,99,235,0.18);
+--tag:rgba(37,99,235,0.07);--tagb:rgba(37,99,235,0.18);--tagtx:#1d4ed8;
+--rb:rgba(239,68,68,0.22);--rbg:rgba(239,68,68,0.06);--rtx:#b91c1c;
+--ok:#065f46;--okbg:rgba(5,150,105,0.07);--okb:rgba(5,150,105,0.2);
+--er:#991b1b;--erbg:rgba(239,68,68,0.07);--erb:rgba(239,68,68,0.2);
+--il:#94a3b8;--iv:#0f172a;--ib:rgba(0,0,0,0.06);
+--topline:linear-gradient(to right,transparent,rgba(37,99,235,0.25),transparent);
+--foot:#94a3b8;--footb:rgba(0,0,0,0.07);
+--glow1:rgba(59,130,246,0.12);--glow2:rgba(124,58,237,0.1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);min-height:100vh;color:var(--tx);cursor:none;overflow-x:hidden;transition:background .4s,color .4s}
+
+/* ===== CURSOR ===== */
+.cursor{width:22px;height:22px;border:2px solid var(--ab);border-radius:50%;position:fixed;pointer-events:none;transform:translate(-50%,-50%);z-index:99999;box-shadow:0 0 18px var(--ab);transition:border-color .3s}
+.cursor-dot{width:6px;height:6px;background:var(--abl);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+
+/* ===== BACKGROUND LAYERS ===== */
+/* Dark bg base */
+.bg-dark-layer{
+  position:fixed;inset:0;z-index:-3;pointer-events:none;
+  background:#050816;
+  transition:opacity .4s ease;
+}
+[data-theme="light"] .bg-dark-layer{opacity:0}
+
+/* Grid overlay */
+.bg-grid-overlay{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(circle at center,black 40%,transparent 90%);
+}
+
+/* Vanta fog (both themes, different colours) */
+#vanta-bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
+
+/* Orbs container */
+.bg-orbs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);animation:orbFloat 12s ease-in-out infinite alternate;pointer-events:none}
+.orb-1{width:520px;height:520px;background:var(--glow1);top:-180px;right:-120px;animation-duration:11s}
+.orb-2{width:420px;height:420px;background:var(--glow2);bottom:-160px;left:-100px;animation-duration:14s;animation-direction:alternate-reverse}
+.orb-3{width:280px;height:280px;background:rgba(99,179,237,0.12);top:40%;left:30%;animation-duration:9s}
+@keyframes orbFloat{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,20px) scale(1.12)}}
+
+/* Floating dots */
+.dots-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.dot{position:absolute;width:3px;height:3px;background:rgba(99,179,237,0.5);border-radius:50%;animation:dotRise linear infinite}
+@keyframes dotRise{0%{transform:translateY(0);opacity:0}10%{opacity:0.8}90%{opacity:0.8}100%{transform:translateY(-100vh);opacity:0}}
+[data-theme="light"] .dot{opacity:0!important}
+
+/* Diagonal lines */
+.lines-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.diag-line{position:absolute;width:1px;height:200px;background:linear-gradient(to bottom,transparent,rgba(59,130,246,0.2),transparent);animation:diagDrift 8s ease-in-out infinite}
+@keyframes diagDrift{0%,100%{opacity:0.3;transform:rotate(-25deg) translateY(0)}50%{opacity:0.8;transform:rotate(-25deg) translateY(-30px)}}
+[data-theme="light"] .diag-line{opacity:0!important}
+
+/* ===== THEME TOGGLE ===== */
+.t-wrap{display:flex;align-items:center;gap:8px}
+.t-label{font-size:.76rem;color:var(--tx3);white-space:nowrap}
+.t-tog{width:46px;height:26px;border-radius:999px;background:var(--inp);border:1px solid var(--bd);position:relative;cursor:pointer;display:flex;align-items:center;padding:3px;transition:.3s;flex-shrink:0}
+.t-thumb{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--ab),var(--ap));transition:transform .3s}
+[data-theme="light"] .t-thumb{transform:translateX(20px)}
+.t-ico{position:absolute;font-size:.68rem;transition:opacity .3s;pointer-events:none}
+.t-ico.moon{right:6px;opacity:1}.t-ico.sun{left:6px;opacity:0}
+[data-theme="light"] .t-ico.moon{opacity:0}[data-theme="light"] .t-ico.sun{opacity:1}
+
+/* ===== PAGES ===== */
+.page{display:none;opacity:0;min-height:100vh}
+.page.active{display:block;animation:fi .4s ease forwards}
+@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== NAV ===== */
+nav{padding:18px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.10);backdrop-filter:blur(20px);background:var(--bg-nav);position:sticky;top:0;z-index:500;transition:background .4s,border-color .4s;flex-wrap:wrap;gap:10px}
+[data-theme="light"] nav{border-bottom-color:var(--bd)}
+.nav-logo{font-size:1.3rem;font-weight:700;cursor:pointer;background:linear-gradient(to right,var(--abl),var(--apl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.nav-link{color:#94a3b8;font-size:.87rem;padding:7px 13px;border-radius:10px;transition:.2s;font-family:'Space Grotesk',sans-serif;cursor:pointer;border:none;background:none}
+[data-theme="light"] .nav-link{color:var(--tx3)}
+.nav-link:hover,.nav-link.act{color:#fff;background:rgba(255,255,255,0.08)}
+[data-theme="light"] .nav-link:hover,[data-theme="light"] .nav-link.act{color:var(--tx);background:var(--bg-card)}
+.nav-link.act{color:var(--abl)}
+.user-pill{display:flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,0.95);border:1px solid rgba(0,0,0,0.08);font-size:.87rem;color:#475569}
+[data-theme="light"] .user-pill{background:var(--bg-card);border-color:var(--bd);color:var(--tx2)}
+.user-avatar{width:29px;height:29px;border-radius:50%;background:linear-gradient(135deg,var(--ab),var(--ap));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff}
+.so-btn{padding:8px 15px;border-radius:10px;border:1px solid var(--rb);background:var(--rbg);color:var(--rtx);font-family:'Space Grotesk',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:5px}
+.so-btn:hover{background:rgba(239,68,68,.15);transform:translateY(-2px)}
+.nav-btn{padding:10px 19px;border-radius:11px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.95);color:#0f172a;font-weight:600;font-size:.87rem;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:.3s}
+[data-theme="light"] .nav-btn{border-color:var(--bd);background:var(--bg-card);color:var(--tx)}
+.nav-btn:hover{transform:translateY(-3px);border-color:var(--ab)}
+.nav-btn.pr{background:linear-gradient(135deg,var(--ab),var(--ap));border:none;color:#fff}
+footer{text-align:center;padding:24px;color:var(--foot);font-size:.8rem;border-top:1px solid var(--footb);margin-top:56px}
+[data-theme="dark"] footer{color:#64748b;border-top-color:rgba(255,255,255,0.07)}
+
+/* ===== DARK MODE CARD SHADOWS ===== */
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .ai-card,
+[data-theme="dark"] .team-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .w-banner,
+[data-theme="dark"] .i-card,
+[data-theme="dark"] .up-area{box-shadow:0 8px 40px rgba(0,0,0,0.55),0 2px 12px rgba(0,0,0,0.3)!important}
+[data-theme="dark"] .av-big{box-shadow:0 0 32px rgba(37,99,235,0.35)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:space-between;padding:130px 8% 90px;gap:40px}
+.hero-l{width:55%}
+.hero-r{width:45%;display:flex;justify-content:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:999px;background:var(--tag);border:1px solid var(--tagb);margin-bottom:22px;color:var(--tagtx);font-size:.87rem}
+.hero h1{font-size:4.4rem;line-height:1.05;margin-bottom:24px;font-weight:700}
+.gt{background:linear-gradient(to right,var(--abl),var(--apl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:.97rem;line-height:1.8;color:var(--tx2);max-width:540px} [data-theme="dark"] .hero p{color:rgba(226,232,240,0.85)} [data-theme="dark"] .hero-para-new{color:#e2e8f0}
+.typ{margin-top:22px;font-size:.93rem;color:var(--abl);min-height:24px}
+.hero-btns{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
+.hero-btn{padding:13px 25px;border-radius:13px;border:1px solid var(--bd);background:var(--bg-card);color:var(--tx);font-weight:600;font-size:.91rem;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:.3s}
+.hero-btn:hover{transform:translateY(-4px);border-color:var(--ab);box-shadow:0 0 22px rgba(59,130,246,.3)}
+.hero-btn.pr{background:linear-gradient(135deg,var(--ab),var(--ap));border:none;color:#fff}
+
+/* ===== AI CARD ===== */
+.ai-card{width:520px;height:580px;border-radius:24px;background:var(--bg-card);border:1px solid var(--bd);position:relative;overflow:hidden;box-shadow:0 0 50px rgba(59,130,246,.1)}
+[data-theme="light"] .ai-card{box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.scanner{position:absolute;width:100%;height:100px;background:linear-gradient(to bottom,transparent,rgba(59,130,246,.3),transparent);animation:sc 4s infinite linear}
+@keyframes sc{from{transform:translateY(-150px)}to{transform:translateY(530px)}}
+.res-prev{position:absolute;inset:26px;border-radius:16px;background:var(--bg-card);border:1px solid var(--bd);padding:24px}
+.rl{height:11px;background:linear-gradient(to right,var(--abl),transparent);border-radius:10px;margin-bottom:14px}
+.rl:nth-child(1){width:80%}.rl:nth-child(2){width:50%}.rl:nth-child(3){width:93%}.rl:nth-child(4){width:70%}.rl:nth-child(5){width:86%}
+.ats-c{position:absolute;bottom:24px;right:24px;width:108px;height:108px;border-radius:50%;border:7px solid var(--bd-h);display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:700;color:var(--abl);box-shadow:0 0 20px rgba(96,165,250,.25)}
+/* ── Animated card internals ── */
+.pulse-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#3b82f6;flex-shrink:0;
+  animation:pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.7);opacity:1}
+  50%{box-shadow:0 0 0 6px rgba(59,130,246,0);opacity:.8}
+}
+.skill-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:10px;
+}
+.sk-label{
+  font-size:.7rem;font-weight:600;color:#94a3b8;
+  width:42px;flex-shrink:0;font-family:monospace;
+}
+.sk-track{
+  flex:1;height:6px;background:rgba(255,255,255,.06);
+  border-radius:999px;overflow:hidden;
+}
+.sk-fill{
+  height:100%;border-radius:999px;width:0;
+  animation:barGrow 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes barGrow{from{width:0}to{width:var(--w,100%)}}
+.sk-pct{
+  font-size:.65rem;color:#475569;
+  font-family:monospace;width:30px;text-align:right;
+}
+.badge-chip{
+  font-size:.65rem;font-weight:600;
+  padding:3px 9px;border-radius:999px;
+  border:1px solid;white-space:nowrap;
+}
+.ats-c{
+  position:relative;flex-shrink:0;
+  width:80px;height:80px;
+  /* override old absolute positioning */
+  bottom:auto;right:auto;
+}
+@keyframes ringAnim{
+  from{stroke-dashoffset:201}
+  to{stroke-dashoffset:18}
+}
+/* ===== TEAM SECTION ===== */
+.team-sec{padding:100px 8%}
+.sec-title{text-align:center;font-size:2.5rem;margin-bottom:14px}
+.sec-sub{text-align:center;max-width:740px;margin:0 auto 58px;color:var(--tx2);line-height:1.8}
+.team-grid{display:flex;flex-direction:column;gap:22px}
+.team-card{display:flex;align-items:center;gap:26px;padding:28px;border-radius:20px;background:var(--bg-card);border:1px solid var(--bd);transition:.35s}
+[data-theme="light"] .team-card{box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.team-card:hover{transform:translateY(-7px);border-color:var(--bd-h);box-shadow:0 10px 32px rgba(59,130,246,.1)}
+.t-img{width:84px;height:84px;border-radius:50%;flex-shrink:0;border:3px solid var(--bd-h);background:linear-gradient(135deg,var(--ab),var(--ap));display:flex;align-items:center;justify-content:center;font-size:1.9rem;font-weight:700;color:#fff;overflow:hidden}
+.t-img img{width:100%;height:100%;object-fit:cover}
+.team-card h3{font-size:1.25rem;margin-bottom:5px;color:var(--tx)}
+.t-role{color:var(--abl);margin-bottom:9px;font-weight:600;font-size:.87rem}
+.team-card p{color:var(--tx2);line-height:1.7;font-size:.91rem}
+
+/* ===== DASHBOARD ===== */
+.dash-main{padding:44px 6%}
+.w-banner{padding:32px 36px;border-radius:20px;background:var(--bg-card);border:1px solid var(--bd);margin-bottom:30px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative}
+[data-theme="light"] .w-banner{box-shadow:0 2px 14px rgba(0,0,0,.05)}
+.w-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,.05),rgba(124,58,237,.03));pointer-events:none}
+.w-text h1{font-size:1.85rem;margin-bottom:4px;position:relative}
+.w-text p{color:var(--tx2);position:relative}
+.w-emoji{font-size:3.4rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:16px;margin-bottom:30px}
+.stat-card{padding:24px;border-radius:16px;background:var(--bg-card);border:1px solid var(--bd);transition:.3s}
+[data-theme="light"] .stat-card{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.stat-card:hover{transform:translateY(-5px);border-color:var(--bd-h);box-shadow:0 0 22px rgba(59,130,246,.09)}
+.s-lbl{font-size:.82rem;color:var(--tx3);margin-bottom:8px}
+.s-val{font-size:2rem;font-weight:700}
+.s-val.bl{background:linear-gradient(to right,var(--abl),var(--ab));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s-val.pu{background:linear-gradient(to right,var(--apl),var(--ap));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s-val.gr{background:linear-gradient(to right,var(--agl),var(--ag));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s-val.am{background:linear-gradient(to right,var(--aal),var(--aa));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.s-sub{font-size:.77rem;color:var(--tx4);margin-top:4px}
+.up-area{padding:42px;border-radius:20px;border:2px dashed var(--upb);background:var(--up);text-align:center;cursor:pointer;transition:.3s}
+.up-area:hover{border-color:rgba(96,165,250,.5);background:rgba(59,130,246,.08)}
+.up-ico{font-size:2.7rem;margin-bottom:13px}
+.up-area h3{font-size:1.1rem;margin-bottom:6px;color:var(--tx)}
+.up-area p{color:var(--tx3);font-size:.87rem}
+.up-btn{display:inline-block;margin-top:16px;padding:11px 24px;border-radius:11px;background:linear-gradient(135deg,var(--ab),var(--ap));color:#fff;font-weight:600;font-size:.91rem;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:.3s}
+.up-btn:hover{transform:translateY(-3px);box-shadow:0 0 20px rgba(59,130,246,.35)}
+
+/* ===== PROFILE ===== */
+.prof-main{padding:44px 6%;max-width:1000px;margin:0 auto}
+.pg-hdr{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+.av-big{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--ab),var(--ap));display:flex;align-items:center;justify-content:center;font-size:1.85rem;font-weight:700;color:#fff;box-shadow:0 0 32px rgba(59,130,246,.28);flex-shrink:0}
+.pg-hdr-tx h1{font-size:1.65rem;font-weight:700}
+.pg-hdr-tx p{color:var(--tx3);margin-top:3px;font-size:.9rem}
+.alert{padding:12px 16px;border-radius:11px;margin-bottom:22px;font-size:.88rem;display:flex;align-items:center;gap:8px}
+.al-ok{background:var(--okbg);border:1px solid var(--okb);color:var(--ok)}
+.al-er{background:var(--erbg);border:1px solid var(--erb);color:var(--er)}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.cards-grid{grid-template-columns:1fr}}
+.i-card{padding:28px;border-radius:18px;background:var(--bg-card);border:1px solid var(--bd);position:relative;overflow:hidden;transition:background .4s}
+[data-theme="light"] .i-card{box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.i-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--topline)}
+.c-title{font-size:.97rem;font-weight:700;color:var(--tx);margin-bottom:4px}
+.c-ico{width:33px;height:33px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.92rem;margin-bottom:14px}
+.ci-bl{background:var(--inp);border:1px solid var(--inpb)}
+.ci-pu{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.18)}
+.ci-gr{background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.16)}
+.c-sub{color:var(--tx4);font-size:.8rem;margin-bottom:16px}
+.i-row{display:flex;flex-direction:column;gap:3px;padding:11px 0;border-bottom:1px solid var(--ib)}
+.i-row:last-child{border-bottom:none;padding-bottom:0}
+.i-lbl{font-size:.74rem;color:var(--il);text-transform:uppercase;letter-spacing:.8px}
+.i-val{font-size:.95rem;color:var(--iv);font-weight:500}
+.i-badge{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--okbg);border:1px solid var(--okb);color:var(--ok);font-size:.72rem;font-weight:600}
+.fg{margin-bottom:14px}
+label{display:block;font-size:.79rem;color:var(--tx3);margin-bottom:5px;font-weight:500}
+.iw{position:relative}
+.ii{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.92rem;color:var(--tx4);pointer-events:none}
+input[type=text],input[type=password],input[type=email]{width:100%;padding:10px 12px 10px 38px;border-radius:10px;border:1px solid var(--inpb);background:var(--inp);color:var(--tx);font-family:'Space Grotesk',sans-serif;font-size:.89rem;outline:none;transition:.3s}
+input:focus{border-color:var(--ab);background:var(--inpf);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+input::placeholder{color:var(--tx4)}
+.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--tx4);cursor:pointer;font-size:.9rem;padding:4px}
+.eye:hover{color:var(--abl)}
+.sb-bar{height:3px;border-radius:99px;margin-top:5px;background:var(--bd);overflow:hidden}
+.sb-fill{height:100%;border-radius:99px;width:0%;transition:.4s}
+.sb-lbl{font-size:.72rem;margin-top:3px}
+.btn-sv{width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--ab),var(--ap));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:.3s;margin-top:3px}
+.btn-sv:hover{transform:translateY(-3px);box-shadow:0 0 22px rgba(59,130,246,.32)}
+
+/* ===== AUTH ===== */
+.auth-pg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.auth-card{width:100%;max-width:420px;padding:38px 36px;border-radius:24px;background:var(--bg-card);border:1px solid var(--bd);backdrop-filter:blur(24px);position:relative;overflow:hidden}
+[data-theme="light"] .auth-card{box-shadow:0 8px 36px rgba(0,0,0,.08)}
+.auth-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--ab),var(--ap),var(--ab))}
+.auth-logo{text-align:center;margin-bottom:8px;font-size:1.2rem;font-weight:700;background:linear-gradient(to right,var(--abl),var(--apl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.auth-ttl{text-align:center;font-size:1.5rem;font-weight:700;margin-bottom:4px}
+.auth-sub{text-align:center;color:var(--tx3);font-size:.87rem;margin-bottom:26px}
+.auth-ft{text-align:center;margin-top:18px;color:var(--tx3);font-size:.85rem}
+.auth-lnk{color:var(--abl);cursor:pointer;font-weight:600;background:none;border:none;font-family:'Space Grotesk',sans-serif;font-size:inherit}
+.auth-lnk:hover{text-decoration:underline}
+.auth-err{background:var(--erbg);border:1px solid var(--erb);color:var(--er);padding:10px 14px;border-radius:9px;font-size:.85rem;display:none;margin-bottom:12px}
+.auth-err.show{display:block}
+
+/* ===== FEATURES SECTION ===== */
+.features-sec{padding:100px 8%;position:relative}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.feature-card{padding:32px;border-radius:24px;background:var(--bg-card);border:1px solid var(--bd);transition:.4s ease;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+[data-theme="dark"] .feature-card{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,.4)!important}
+.feature-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,0.10),transparent);opacity:0;transition:.4s ease}
+.feature-card:hover::before{opacity:1}
+.feature-card:hover{transform:translateY(-10px);box-shadow:0 0 40px rgba(37,99,235,0.18)!important;border-color:rgba(96,165,250,0.3)}
+.feature-icon{width:56px;height:56px;border-radius:16px;background:rgba(37,99,235,0.10);border:1px solid rgba(37,99,235,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:26px}
+[data-theme="dark"] .feature-icon{background:rgba(59,130,246,0.12);border-color:rgba(96,165,250,0.25)}
+.feature-card h3{font-size:1.15rem;margin-bottom:10px;font-weight:600;color:var(--tx)}
+.feature-card p{color:var(--tx2);line-height:1.7;font-size:.93rem}
+
+/* ===== STATS ROW ===== */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:70px}
+.stats-row .stat-card{text-align:center;padding:32px 20px;border-radius:20px;background:var(--bg-card);border:1px solid var(--bd);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+[data-theme="dark"] .stats-row .stat-card{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.07)!important;box-shadow:0 8px 32px rgba(0,0,0,.4)!important}
+.stat-number{font-size:2.8rem;font-weight:700;background:linear-gradient(to right,var(--abl),var(--apl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{color:var(--tx3);margin-top:6px;font-size:.88rem}
+
+/* ===== HERO EXTRA PARA ===== */
+.hero-para-new{font-size:1.2rem;line-height:1.8;color:var(--tx2);max-width:540px;margin-bottom:14px;font-weight:700}
+
+/* ===== DARK MODE TEXT VISIBILITY FIXES ===== */
+[data-theme="dark"] .hero p,
+[data-theme="dark"] .hero-para-new{color:rgba(226,232,240,0.88)}
+[data-theme="dark"] .sec-sub{color:rgba(203,213,225,0.85)}
+[data-theme="dark"] .team-card p{color:rgba(203,213,225,0.82)}
+[data-theme="dark"] .feature-card p{color:rgba(203,213,225,0.82)}
+[data-theme="dark"] .hero-tag{background:rgba(59,130,246,0.15);border-color:rgba(96,165,250,0.3);color:#93c5fd}
+[data-theme="dark"] .sec-title{color:#f1f5f9}
+[data-theme="dark"] .team-card h3{color:#f1f5f9}
+[data-theme="dark"] .feature-card h3{color:#f1f5f9}
+[data-theme="dark"] .w-text h1{color:#f1f5f9}
+[data-theme="dark"] .w-text p{color:rgba(203,213,225,0.8)}
+[data-theme="dark"] .s-lbl{color:#94a3b8}
+[data-theme="dark"] .s-sub{color:#64748b}
+[data-theme="dark"] .up-area h3{color:#f1f5f9}
+[data-theme="dark"] .up-area p{color:#94a3b8}
+[data-theme="dark"] .auth-ttl{color:#f1f5f9}
+[data-theme="dark"] .auth-sub{color:#94a3b8}
+[data-theme="dark"] .auth-ft{color:#94a3b8}
+[data-theme="dark"] .auth-logo{background:linear-gradient(to right,#93c5fd,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+[data-theme="dark"] label{color:#94a3b8}
+[data-theme="dark"] input[type=text],[data-theme="dark"] input[type=password],[data-theme="dark"] input[type=email]{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.12);color:#f1f5f9}
+[data-theme="dark"] input::placeholder{color:#475569}
+[data-theme="dark"] .c-title{color:#f1f5f9}
+[data-theme="dark"] .c-sub{color:#64748b}
+[data-theme="dark"] .i-lbl{color:#64748b}
+[data-theme="dark"] .i-val{color:#e2e8f0}
+[data-theme="dark"] .pg-hdr-tx h1{color:#f1f5f9}
+[data-theme="dark"] .pg-hdr-tx p{color:#94a3b8}
+[data-theme="dark"] .stat-label{color:#94a3b8}
+[data-theme="dark"] .user-pill{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1);color:#e2e8f0}
+[data-theme="dark"] .nav-btn{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:#f1f5f9}
+[data-theme="dark"] footer{color:#475569}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){.hero{flex-direction:column;text-align:center}.hero-l,.hero-r{width:100%}.hero-btns{justify-content:center}.hero h1{font-size:3.2rem}.stats-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.hero h1{font-size:2.6rem}.ai-card{width:100%;height:360px}.team-card{flex-direction:column}.stats-row{grid-template-columns:repeat(2,1fr)}.features-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
-    <!-- CURSOR -->
+<!-- CURSOR -->
+<div class="cursor" id="CR"></div>
+<div class="cursor-dot" id="CD"></div>
 
-    <div class="cursor"></div>
-    <div class="cursor-dot"></div>
+<!-- DARK BACKGROUND BASE -->
+<div class="bg-dark-layer"></div>
 
-    <!-- BACKGROUND -->
+<!-- VANTA NET BACKGROUND -->
+<div id="vanta-bg"></div>
 
-    <div class="background">
-        <div class="gradient"></div>
-        <div class="gradient2"></div>
-        <div class="grid"></div>
+<!-- GRID OVERLAY -->
+<div class="bg-grid-overlay"></div>
+
+<!-- ORBS -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- FLOATING DOTS -->
+<div class="dots-bg" id="dotsBg"></div>
+
+<!-- DIAGONAL LINES -->
+<div class="lines-bg" id="linesBg"></div>
+
+<!-- ==================== LANDING ==================== -->
+<div class="page active" id="page-landing">
+<nav>
+  <div class="nav-logo" onclick="goTo('landing')">RecruiterVisionAI</div>
+  <div class="nav-right">
+    <div class="t-wrap"><span class="t-label" id="TL0">🌙 Dark</span><div class="t-tog" onclick="toggleTheme()"><span class="t-ico moon">🌙</span><span class="t-ico sun">☀️</span><div class="t-thumb"></div></div></div>
+    <button class="nav-btn" onclick="goTo('signin')">Sign In</button>
+    <button class="nav-btn pr" onclick="goTo('signup')">Get Started</button>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-l">
+    <div class="hero-tag">◈ Enterprise-Grade AI Recruitment Intelligence</div>
+<style>
+  .hero-title {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .hero-title {
+    background: none;
+    -webkit-text-fill-color: white;
+    color: white;
+  }
+</style>
+<h1 id="hero-title" style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Redefining the<br>
+  <span style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Standard of</span>
+
+  <span style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Talent Acquisition</span>
+</h1>
+    <p class="hero-para-new">RecruiterVision AI delivers enterprise-grade resume intelligence to both candidates and hiring professionals. Powered by advanced machine learning models trained on extensive real-world hiring data, our platform transforms resume evaluation into a precise, data-driven process — accelerating time-to-hire and improving candidate quality at every stage of the pipeline.</p>
+    <p>Built for the modern recruitment lifecycle, RecruiterVision AI transcends conventional Applicant Tracking Systems by integrating Natural Language Processing, contextual semantic analysis, and predictive scoring models. The platform delivers objective, real-time assessments of resume quality, ATS compatibility, and skill alignment — enabling informed hiring decisions backed by measurable intelligence.</p>
+    <div class="typ" id="TYP"></div>
+    <div class="hero-btns">
+      <button class="hero-btn pr" onclick="goTo('signup')">Access Dashboard</button>
+      <button class="hero-btn" onclick="document.getElementById('FT').scrollIntoView({behavior:'smooth'})">Platform Features</button>
+      <button class="hero-btn" onclick="document.getElementById('TS').scrollIntoView({behavior:'smooth'})">Our Team</button>
     </div>
-
-    <!-- NAVBAR -->
-
-    <nav>
-        <div class="logo">RecruiterVisionAI</div>
-
-        <div class="nav-buttons">
-            <button class="btn">Sign In</button>
-            <button class="btn primary">Get Started</button>
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-
-    <section class="hero">
-
-        <div class="hero-left">
-
-            <div class="tag">
-                <i data-lucide="sparkles"></i>
-                AI Recruitment Intelligence Platform
-            </div>
-
-            <h1>
-                The Future of <br>
-                <span class="gradient-text">Resume Intelligence</span>
-            </h1>
-
-            <p>
-                RecruiterVision AI is an advanced AI-powered recruitment intelligence platform designed to analyze resumes beyond traditional ATS systems.
-                
-                By combining Natural Language Processing, Machine Learning, and semantic analysis, the system evaluates resume quality, detects skill gaps, measures ATS compatibility, and delivers recruiter-grade insights in real time.
-            </p>
-
-            <div class="typing" id="typing"></div>
-
-            <div class="hero-buttons">
-                <button class="btn primary">Launch Dashboard</button>
-                <button class="btn">Explore Features</button>
-            </div>
-
-        </div>
-
-        <div class="hero-right">
-
-            <div class="ai-card">
-
-                <div class="scanner"></div>
-
-                <div class="resume-preview">
-
-                    <div class="resume-line"></div>
-                    <div class="resume-line"></div>
-                    <div class="resume-line"></div>
-                    <div class="resume-line"></div>
-                    <div class="resume-line"></div>
-
-                    <div class="ats-circle">
-                        91%
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- TEAM SECTION -->
-
-    <section class="section">
-
-        <h2 class="section-title">
-            The Minds Behind The Intelligence
-        </h2>
-
-        <p class="section-subtitle">
-            A multidisciplinary team of developers and AI enthusiasts working together to build the future of intelligent recruitment systems.
-            
-            Combining expertise in Machine Learning, NLP, UI/UX design, and backend engineering, the team behind RecruiterVision AI is focused on creating a platform that feels futuristic, practical, and impactful.
-        </p>
-
-        <div class="team-grid">
-
-            <div class="team-card">
-                <div class="team-image">
-                    <img src="{{ url_for('static', filename='images/vidhi.jpg') }}" alt="Vidhi Patel">
-                </div>
-                <h3>Vidhi Patel</h3>
-                <div class="role">Team Leader • AI & System Architecture</div>
-                <p>
-                    Leading the vision, system workflow, and AI integration behind RecruiterVision AI while coordinating frontend, backend, and NLP pipeline development.
-                </p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-image">
-                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/divyanshi.jpg" alt="Divyanshi Rana">
-                </div>
-                <h3>Divyanshi Rana</h3>
-                <div class="role">Frontend & Interactive Experience Developer</div>
-                <p>
-                    Focused on crafting immersive UI experiences, interactive animations, and futuristic visual design systems for the platform.
-                </p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-image">
-                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/vishwa.jpg" alt="Vishwa Prajapati">
-                </div>
-                <h3>Vishwa Prajapati</h3>
-                <div class="role">Backend & Processing Engineer</div>
-                <p>
-                    Responsible for backend architecture, resume parsing pipelines, and intelligent data processing modules.
-                </p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-image">
-                    <img src="/home/vidhi/Desktop/Python PGMS/RecruiterVisionAI/static/images/shivani.jpg" alt="Shivani Prajapati">
-                </div>
-                <h3>Shivani Prajapati</h3>
-                <div class="role">NLP & AI Intelligence Developer</div>
-                <p>
-                    Working on skill extraction, ATS scoring logic, semantic analysis, and recruiter-style AI feedback systems.
-                </p>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- FOOTER -->
-
-    <footer>
-        Powered by AI • Built with Vision • Designed for the Future
-    </footer>
-
-    <!-- JS -->
-
-    <script>
-
-        lucide.createIcons();
-
-        // ================= PARTICLES =================
-
-        const bg = document.querySelector('.background');
-
-        for(let i = 0; i < 60; i++) {
-
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-
-            const size = Math.random() * 4 + 2;
-
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.top = Math.random() * window.innerHeight + 'px';
-            particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
-            particle.style.opacity = Math.random();
-
-            bg.appendChild(particle);
-
-        }
-
-        // ================= CUSTOM CURSOR =================
-
-        const cursor = document.querySelector('.cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-
-        document.addEventListener('mousemove', (e) => {
-
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-
-        });
-
-        // ================= MAGNETIC BUTTON =================
-
-        const buttons = document.querySelectorAll('.btn');
-
-        buttons.forEach(btn => {
-
-            btn.addEventListener('mousemove', (e) => {
-
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-
-                gsap.to(btn, {
-                    x: x * 0.2,
-                    y: y * 0.2,
-                    duration: 0.3
-                });
-
-            });
-
-            btn.addEventListener('mouseleave', () => {
-
-                gsap.to(btn, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.3
-                });
-
-            });
-
-        });
-
-        // ================= TYPING EFFECT =================
-
-        const texts = [
-            'Initializing NLP Engine...',
-            'Scanning Resume Structure...',
-            'Calculating ATS Compatibility...',
-            'Detecting Technical Skills...',
-            'Generating Recruiter Insights...',
-            'AI System Online.'
-        ];
-
-        let count = 0;
-        let index = 0;
-        let currentText = '';
-        let letter = '';
-
-        (function type() {
-
-            if(count === texts.length) {
-                count = 0;
-            }
-
-            currentText = texts[count];
-            letter = currentText.slice(0, ++index);
-
-            document.getElementById('typing').textContent = letter;
-
-            if(letter.length === currentText.length) {
-
-                count++;
-                index = 0;
-
-                setTimeout(type, 1500);
-
-            } else {
-
-                setTimeout(type, 60);
-
-            }
-
-        })();
-
-        // ================= PARALLAX EFFECT =================
-
-        document.addEventListener('mousemove', (e) => {
-
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            gsap.to('.gradient', {
-                x: x * 60,
-                y: y * 60,
-                duration: 1
-            });
-
-            gsap.to('.gradient2', {
-                x: -x * 60,
-                y: -y * 60,
-                duration: 1
-            });
-
-            gsap.to('.ai-card', {
-                rotateY: (x - 0.5) * 14,
-                rotateX: -(y - 0.5) * 14,
-                duration: 1
-            });
-
-        });
-
-    </script>
-
+  </div>
+  <div class="hero-r">
+    <div class="ai-card" id="AIC">
+  <!-- Scanning beam -->
+  <div class="scanner"></div>
+
+  <!-- Glassmorphism inner card -->
+  <div class="res-prev">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="pulse-dot"></div>
+      <span style="font-size:.72rem;color:#3b82f6;font-weight:700;letter-spacing:.08em;font-family:monospace">AI SCANNING</span>
+    </div>
+    <div style="font-size:.65rem;color:#64748b;font-family:monospace">00:02</div>
+  </div>
+
+  <!-- Candidate row -->
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(59,130,246,.06);border:1px solid rgba(99,179,237,.12);margin-bottom:16px">
+    <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0">A</div>
+    <div>
+      <div style="font-size:.8rem;font-weight:700;color:#e2e8f0">Arjun Sharma</div>
+      <div style="font-size:.68rem;color:#64748b">Senior ML Engineer · 4 yrs exp</div>
+    </div>
+    <div style="margin-left:auto;font-size:.65rem;padding:3px 8px;border-radius:999px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:#34d399">Active</div>
+  </div>
+
+  <!-- ATS Score ring + match label -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:12px 14px;border-radius:12px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15)">
+    <div style="position:relative;width:72px;height:72px;flex-shrink:0">
+      <svg viewBox="0 0 80 80" width="72" height="72" style="transform:rotate(-90deg)">
+        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(59,130,246,.12)" stroke-width="7"/>
+        <circle cx="40" cy="40" r="32" fill="none" stroke="url(#rg)" stroke-width="7"
+          stroke-dasharray="201" stroke-dashoffset="18" stroke-linecap="round"
+          style="animation:ringAnim 2s ease forwards"/>
+        <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
+      </svg>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <span style="font-size:1.1rem;font-weight:800;color:#e8f0ff">91%</span>
+        <span style="font-size:.48rem;color:#64748b;margin-top:-2px">ATS</span>
+      </div>
+    </div>
+    <div style="flex:1;padding-left:14px">
+      <div style="font-size:.78rem;font-weight:700;color:#e2e8f0;margin-bottom:6px">Strong Match 💪</div>
+      <div class="badge-chip" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.22);color:#34d399;margin-bottom:4px">✅ 12 Skills Matched</div>
+      <div class="badge-chip" style="background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.18);color:#f87171;margin-bottom:4px">⚠️ 3 Gaps Found</div>
+      <div class="badge-chip" style="background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.2);color:#60a5fa">💡 5 Recommended</div>
+    </div>
+  </div>
+
+  <!-- Skill bars -->
+  <div style="margin-bottom:14px">
+    <div style="font-size:.63rem;color:#475569;font-family:monospace;letter-spacing:.08em;margin-bottom:8px">SKILL ANALYSIS</div>
+    <div class="skill-row"><span class="sk-label">Python</span><div class="sk-track"><div class="sk-fill" style="--w:92%;background:linear-gradient(90deg,#3b82f6,#8b5cf6)"></div></div><span class="sk-pct">92%</span></div>
+    <div class="skill-row"><span class="sk-label">React</span><div class="sk-track"><div class="sk-fill" style="--w:78%;background:linear-gradient(90deg,#06b6d4,#3b82f6);animation-delay:.2s"></div></div><span class="sk-pct">78%</span></div>
+    <div class="skill-row"><span class="sk-label">ML/AI</span><div class="sk-track"><div class="sk-fill" style="--w:85%;background:linear-gradient(90deg,#8b5cf6,#ec4899);animation-delay:.4s"></div></div><span class="sk-pct">85%</span></div>
+    <div class="skill-row"><span class="sk-label">Docker</span><div class="sk-track"><div class="sk-fill" style="--w:60%;background:linear-gradient(90deg,#10b981,#06b6d4);animation-delay:.6s"></div></div><span class="sk-pct">60%</span></div>
+  </div>
+
+  <!-- Divider -->
+  <div style="height:1px;background:rgba(99,179,237,.1);margin-bottom:14px"></div>
+
+  <!-- Bottom action row -->
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:.68rem;color:#475569;font-family:monospace">report_generated.pdf</div>
+    <div style="font-size:.68rem;padding:4px 12px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:600;cursor:pointer">View Report →</div>
+  </div>
+
+</div>
+
+  </div>
+</div>
+</section>
+<section class="features-sec" id="FT">
+  <h2 class="sec-title">A Platform Built on Precision &amp; Performance</h2>
+  <p class="sec-sub">Each module of RecruiterVision AI is purpose-built to deliver measurable outcomes — reducing screening time, improving match accuracy, and providing actionable intelligence at every stage of the recruitment process.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">🧠</div><h3>NLP-Driven Analysis</h3><p>Advanced Natural Language Processing extracts contextual meaning from resume content — moving beyond keyword matching to surface genuine candidate qualifications and potential.</p></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><h3>ATS Compatibility Scoring</h3><p>Proprietary scoring algorithms evaluate resume structure, formatting, and keyword density against ATS benchmarks — with prescriptive recommendations to maximise shortlisting probability.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔍</div><h3>Skill Gap Analysis</h3><p>Systematic identification of competency gaps relative to target role requirements, with prioritised improvement recommendations aligned to current industry standards.</p></div>
+    <div class="feature-card"><div class="feature-icon">⚡</div><h3>Real-Time Intelligence</h3><p>Recruiter-calibre assessment reports generated within seconds — significantly reducing manual review overhead and enabling high-volume screening at scale.</p></div>
+    <div class="feature-card"><div class="feature-icon">🎯</div><h3>Semantic Role Matching</h3><p>Contextual matching intelligence interprets synonyms, adjacent competencies, and domain-specific terminology — ensuring no qualified candidate is overlooked due to terminology variance.</p></div>
+    <div class="feature-card"><div class="feature-icon">📈</div><h3>Resume Optimisation</h3><p>AI-driven recommendations to strengthen impact statements, quantify achievements, and align resume language with target role expectations and recruiter evaluation criteria.</p></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-number">98%</div><div class="stat-label">ATS Compatibility Accuracy</div></div>
+    <div class="stat-card"><div class="stat-number">3x</div><div class="stat-label">Reduction in Screening Time</div></div>
+    <div class="stat-card"><div class="stat-number">50K+</div><div class="stat-label">Resumes Processed</div></div>
+    <div class="stat-card"><div class="stat-number">4.9★</div><div class="stat-label">Client Satisfaction Rating</div></div>
+  </div>
+</section>
+<section class="team-sec" id="TS">
+  <h2 class="sec-title">The Team Behind RecruiterVision AI</h2>
+  <p class="sec-sub">RecruiterVision AI is developed by a dedicated multidisciplinary team with specialisations spanning Artificial Intelligence, Natural Language Processing, full-stack engineering, and user experience design — united by a shared commitment to transforming the recruitment technology landscape.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="t-img"><img src="{{ url_for('static', filename='images/vidhi.jpg') }}" alt="VP" onerror="this.style.display='none'">V</div>
+      <div><h3 style = "color: black;">Vidhi Patel</h3><div class="t-role">Project Lead · AI Strategy &amp; System Architecture</div><p style = "color: black;">Responsible for defining the product vision, overseeing end-to-end system architecture, and coordinating cross-functional development across AI, frontend, and backend workstreams to ensure cohesive platform delivery.</p></div>
+    </div>
+    <div class="team-card">
+      <div class="t-img"><img src="{{ url_for('static', filename='images/divyanshi.jpg') }}" alt="DR" onerror="this.style.display='none'">D</div>
+      <div><h3 style = "color : black;">Divyanshi Rana</h3><div class="t-role">Frontend Engineer · UI/UX &amp; Interaction Design</div><p style = "color : black;">Leads the design and implementation of the platform's user interface, focusing on responsive layouts, performance-optimised animations, and a coherent visual design system that reflects the platform's professional identity.</p></div>
+    </div>
+    <div class="team-card">
+      <div class="t-img"><img src="{{ url_for('static', filename='images/vishwa.jpg') }}" alt="VP" onerror="this.style.display='none'">V</div>
+      <div><h3 style = "color: black;">Vishwa Prajapati</h3><div class="t-role">Backend Engineer · Data Processing &amp; Infrastructure</div><p style = "color: black;">Architects the server-side infrastructure, including resume ingestion pipelines, data transformation modules, API design, and system performance optimisation to support scalable, reliable platform operations.</p></div>
+    </div>
+    <div class="team-card">
+      <div class="t-img"><img src="{{ url_for('static', filename='images/shivani.jpg') }}" alt="SP" onerror="this.style.display='none'">S</div>
+      <div><h3 style = "color: black;">Shivani Prajapati</h3><div class="t-role">AI/NLP Engineer · Intelligence &amp; Scoring Systems</div><p style = "color: black;">Develops the core intelligence layer of the platform — encompassing skill extraction algorithms, ATS scoring logic, semantic similarity models, and the AI-driven feedback engine that powers recruiter-grade resume assessments.</p></div>
+    </div>
+  </div>
+</section>
+<footer style = "color : rgb(255, 255, 255)">RecruiterVision AI · Enterprise Recruitment Intelligence Platform · © 2025 All Rights Reserved</footer>
+</div>
+
+<!-- ==================== SIGN IN ==================== -->
+<div class="page" id="page-signin">
+<nav>
+  <div class="nav-logo" onclick="goTo('landing')">RecruiterVisionAI</div>
+  <div class="nav-right">
+    <div class="t-wrap"><span class="t-label" id="TL1">🌙 Dark</span><div class="t-tog" onclick="toggleTheme()"><span class="t-ico moon">🌙</span><span class="t-ico sun">☀️</span><div class="t-thumb"></div></div></div>
+    <button class="nav-btn" onclick="goTo('signup')">Sign Up</button>
+  </div>
+</nav>
+<div class="auth-pg">
+  <div class="auth-card">
+    <div class="auth-logo">RecruiterVisionAI</div>
+    <div class="auth-ttl">Authorised Personnel Sign-In</div>
+    <div class="auth-sub">Access your RecruiterVision AI workspace securely.</div>
+    <div class="auth-err" id="SI_ERR">⚠️ Invalid email or password.</div>
+    <div class="fg"><label>Email Address</label><div class="iw"><span class="ii">📧</span><input type="email" id="SI_EM" placeholder="you@example.com"></div></div>
+    <div class="fg"><label>Password</label><div class="iw"><span class="ii">🔑</span><input type="password" id="SI_PW" placeholder="Your password"><button class="eye" onclick="tpw('SI_PW',this)">👁</button></div></div>
+    <button class="btn-sv" style="margin-top:6px" onclick="doSignIn()">Sign In</button>
+    <div class="auth-ft">Don't have an account? <button class="auth-lnk" onclick="goTo('signup')">Sign Up</button></div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SIGN UP ==================== -->
+<div class="page" id="page-signup">
+<nav>
+  <div class="nav-logo" onclick="goTo('landing')">RecruiterVisionAI</div>
+  <div class="nav-right">
+    <div class="t-wrap"><span class="t-label" id="TL2">🌙 Dark</span><div class="t-tog" onclick="toggleTheme()"><span class="t-ico moon">🌙</span><span class="t-ico sun">☀️</span><div class="t-thumb"></div></div></div>
+    <button class="nav-btn" onclick="goTo('signin')">Sign In</button>
+  </div>
+</nav>
+<div class="auth-pg">
+  <div class="auth-card">
+    <div class="auth-logo">RecruiterVisionAI</div>
+    <div class="auth-ttl">Create Your Account</div>
+    <div class="auth-sub">Register to access the RecruiterVision AI platform.</div>
+    <div class="auth-err" id="SU_ERR"></div>
+    <div class="fg"><label>Full Name</label><div class="iw"><span class="ii">👤</span><input type="text" id="SU_NM" placeholder="Your full name"></div></div>
+    <div class="fg"><label>Email Address</label><div class="iw"><span class="ii">📧</span><input type="email" id="SU_EM" placeholder="you@example.com"></div></div>
+    <div class="fg"><label>Password</label><div class="iw"><span class="ii">🔒</span><input type="password" id="SU_PW" placeholder="Min. 6 characters" oninput="chkStr(this.value,'SB1','SL1')"><button class="eye" onclick="tpw('SU_PW',this)">👁</button></div><div class="sb-bar"><div class="sb-fill" id="SB1"></div></div><div class="sb-lbl" id="SL1"></div></div>
+    <div class="fg"><label>Confirm Password</label><div class="iw"><span class="ii">🔐</span><input type="password" id="SU_CF" placeholder="Repeat password"><button class="eye" onclick="tpw('SU_CF',this)">👁</button></div></div>
+    <button class="btn-sv" style="margin-top:6px" onclick="doSignUp()">Create Account</button>
+    <div class="auth-ft">Already have an account? <button class="auth-lnk" onclick="goTo('signin')">Sign In</button></div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div class="page" id="page-dashboard">
+<nav>
+  <div class="nav-logo" onclick="goTo('landing')">RecruiterVisionAI</div>
+  <div class="nav-right">
+    <div class="t-wrap"><span class="t-label" id="TL3">🌙 Dark</span><div class="t-tog" onclick="toggleTheme()"><span class="t-ico moon">🌙</span><span class="t-ico sun">☀️</span><div class="t-thumb"></div></div></div>
+    <button class="nav-link" onclick="goTo('profile')">My Profile</button>
+    <div class="user-pill"><div class="user-avatar" id="DA">U</div><span id="DN">User</span></div>
+    <button class="so-btn" onclick="doSignOut()">Sign Out</button>
+  </div>
+</nav>
+<main class="dash-main">
+  <div class="w-banner"><div class="w-text"><h1>Welcome back, <span id="DWN">User</span>! 👋</h1><p>Your workspace is active. Submit a resume document to initiate AI-powered analysis.</p></div><div class="w-emoji">🧠</div></div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="s-lbl">Documents Analysed</div><div class="s-val bl">0</div><div class="s-sub">Submit your first document to begin</div></div>
+    <div class="stat-card"><div class="s-lbl">Average ATS Compatibility Score</div><div class="s-val pu">—</div><div class="s-sub">Scored on a 100-point scale</div></div>
+    <div class="stat-card"><div class="s-lbl">Competencies Identified</div><div class="s-val gr">0</div><div class="s-sub">Aggregated across all submissions</div></div>
+    <div class="stat-card"><div class="s-lbl">Assessment Reports Issued</div><div class="s-val am">0</div><div class="s-sub">AI-generated intelligence reports</div></div>
+  </div>
+  <div class="up-area"><div class="up-ico">📄</div><h3>Submit a Resume Document for Analysis</h3><p>Accepted formats: PDF, DOCX · Maximum file size: 5 MB · Analysis delivered in real time</p><button class="up-btn">Select Document</button></div>
+</main>
+<footer>RecruiterVision AI · Enterprise Recruitment Intelligence Platform · © 2025 All Rights Reserved</footer>
+</div>
+
+<!-- ==================== PROFILE ==================== -->
+<div class="page" id="page-profile">
+<nav>
+  <div class="nav-logo" onclick="goTo('landing')">RecruiterVisionAI</div>
+  <div class="nav-right">
+    <div class="t-wrap"><span class="t-label" id="TL4">🌙 Dark</span><div class="t-tog" onclick="toggleTheme()"><span class="t-ico moon">🌙</span><span class="t-ico sun">☀️</span><div class="t-thumb"></div></div></div>
+    <button class="nav-link" onclick="goTo('dashboard')">Dashboard</button>
+    <button class="nav-link act">My Profile</button>
+    <button class="so-btn" onclick="doSignOut()">Sign Out</button>
+  </div>
+</nav>
+<main class="prof-main">
+  <div class="pg-hdr"><div class="av-big" id="PA">U</div><div class="pg-hdr-tx"><h1 id="PN">User</h1><p>Review and update your account credentials and personal information.</p></div></div>
+  <div id="PALRT"></div>
+  <div class="cards-grid">
+    <div class="i-card">
+      <div class="c-ico ci-gr">🪪</div><div class="c-title">Account Information</div><div class="c-sub">Your registered account details on file</div>
+      <div class="i-row"><div class="i-lbl">Full Name</div><div class="i-val" id="PNMV">—</div></div>
+      <div class="i-row"><div class="i-lbl">Email Address</div><div class="i-val" id="PEMV">—</div></div>
+      <div class="i-row"><div class="i-lbl">Account Status</div><div class="i-val"><span class="i-badge">✓ Active</span></div></div>
+      <div class="i-row"><div class="i-lbl">Password</div><div class="i-val">••••••••</div></div>
+    </div>
+    <div class="i-card">
+      <div class="c-ico ci-bl">✏️</div><div class="c-title">Update Display Name</div><div class="c-sub">Modify the name displayed across your account</div>
+      <div class="fg"><label>New Name</label><div class="iw"><span class="ii">👤</span><input type="text" id="PNN" placeholder="Enter new name"></div></div>
+      <button class="btn-sv" onclick="saveName()">Save Changes</button>
+    </div>
+    <div class="i-card" style="grid-column:1/-1">
+      <div class="c-ico ci-pu">🔐</div><div class="c-title">Update Password</div><div class="c-sub">Maintain account security by using a strong, unique password</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px" id="PWG">
+        <div class="fg"><label>Current Password</label><div class="iw"><span class="ii">🔑</span><input type="password" id="CPW" placeholder="Current password"><button class="eye" onclick="tpw('CPW',this)">👁</button></div></div>
+        <div class="fg"><label>New Password</label><div class="iw"><span class="ii">🔒</span><input type="password" id="NPW" placeholder="Min. 6 characters" oninput="chkStr(this.value,'SB2','SL2')"><button class="eye" onclick="tpw('NPW',this)">👁</button></div><div class="sb-bar"><div class="sb-fill" id="SB2"></div></div><div class="sb-lbl" id="SL2"></div></div>
+        <div class="fg"><label>Confirm New Password</label><div class="iw"><span class="ii">🔐</span><input type="password" id="CNPW" placeholder="Repeat new password"><button class="eye" onclick="tpw('CNPW',this)">👁</button></div></div>
+      </div>
+      <button class="btn-sv" style="max-width:240px" onclick="savePw()">Update Credentials</button>
+    </div>
+  </div>
+</main>
+<footer>RecruiterVision AI · Enterprise Recruitment Intelligence Platform · © 2025 All Rights Reserved</footer>
+</div>
+
+<script>
+// ===== VANTA INIT =====
+// Dark  → Vanta NET  |  Light → Vanta FOG
+let vantaEffect = null;
+
+function initVantaDark() {
+  if (vantaEffect) { vantaEffect.destroy(); vantaEffect = null; }
+  vantaEffect = VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0x5e5e96
+  });
+}
+
+function initVantaLight() {
+  if (vantaEffect) { vantaEffect.destroy(); vantaEffect = null; }
+  vantaEffect = VANTA.FOG({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    highlightColor: 0xffffff,
+    midtoneColor:   0xf0e2e2,
+    lowlightColor:  0xa09dc3,
+    baseColor:      0xc0a5d2,
+    blurFactor:     0.55,
+    speed:          1.2,
+    zoom:           0.80
+  });
+}
+
+// Start with dark NET
+initVantaDark();
+
+function updateVantaTheme(isDark) {
+  if (isDark) initVantaDark();
+  else initVantaLight();
+}
+
+// ===== FLOATING DOTS (dark only) =====
+const dotsBg = document.getElementById('dotsBg');
+for (let i = 0; i < 50; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot';
+  d.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${8+Math.random()*10}s;animation-delay:-${Math.random()*10}s;`;
+  dotsBg.appendChild(d);
+}
+
+// ===== DIAGONAL LINES (dark only) =====
+const linesBg = document.getElementById('linesBg');
+for (let i = 0; i < 6; i++) {
+  const l = document.createElement('div');
+  l.className = 'diag-line';
+  l.style.cssText = `left:${10+i*15}%;top:${Math.random()*60}%;animation-delay:${i*1.5}s;animation-duration:${7+i}s;`;
+  linesBg.appendChild(l);
+}
+
+// ===== CURSOR =====
+const CR=document.getElementById('CR'),CD=document.getElementById('CD');
+document.addEventListener('mousemove',e=>{
+  CR.style.left=e.clientX+'px';CR.style.top=e.clientY+'px';
+  CD.style.left=e.clientX+'px';CD.style.top=e.clientY+'px';
+});
+
+// ===== PARALLAX (AI card) =====
+document.addEventListener('mousemove',e=>{
+  const x=e.clientX/window.innerWidth,y=e.clientY/window.innerHeight;
+  const c=document.getElementById('AIC');
+  if(c&&document.getElementById('page-landing').classList.contains('active'))
+    gsap.to(c,{rotateY:(x-.5)*12,rotateX:-(y-.5)*12,duration:1.2});
+});
+
+// ===== STATE =====
+const users={};let CU=null,isDark=true;
+(function(){const lb='🌙 Dark';for(let i=0;i<5;i++){const e=document.getElementById('TL'+i);if(e)e.textContent=lb;}})();
+
+// ===== THEME =====
+function toggleTheme(){
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  updateVantaTheme(isDark);
+  const lb=isDark?'🌙 Dark':'☀️ Light';
+  for(let i=0;i<5;i++){const e=document.getElementById('TL'+i);if(e)e.textContent=lb;}
+}
+
+// ===== PAGE ROUTING =====
+function goTo(pg){
+  // ── Flask routes ───────────────────────────────────
+  if(pg==='signin')   { window.location.href='/login';     return; }
+  if(pg==='signup')   { window.location.href='/signup';    return; }
+  if(pg==='dashboard'){ window.location.href='/dashboard'; return; }
+  if(pg==='profile')  { window.location.href='/profile';   return; }
+  // ── Landing page stays SPA ─────────────────────────
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none'});
+  const t=document.getElementById('page-'+pg);if(!t)return;
+  t.style.display='block';void t.offsetWidth;t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(pg==='landing')initLanding();
+}
+
+// ===== LANDING (no separate particles now — orbs/dots handle bg) =====
+function initLanding(){}
+
+// ===== TYPING EFFECT =====
+const TX=['Initializing NLP Engine...','Scanning Resume Structure...','Calculating ATS Compatibility...','Detecting Technical Skills...','Generating Recruiter Insights...','AI System Online.'];
+let tc=0,ti=0;
+(function typ(){
+  if(tc===TX.length)tc=0;
+  const cur=TX[tc],lt=cur.slice(0,++ti);
+  const el=document.getElementById('TYP');if(el)el.textContent=lt;
+  if(lt.length===cur.length){tc++;ti=0;setTimeout(typ,1500);}else setTimeout(typ,65);
+})();
+
+// ===== DASHBOARD INIT =====
+function initDash(){
+  if(!CU)return;
+  document.getElementById('DN').textContent=CU.name;
+  document.getElementById('DWN').textContent=CU.name;
+  document.getElementById('DA').textContent=CU.name[0].toUpperCase();
+  gsap.from('#page-dashboard .w-banner',{opacity:0,y:26,duration:.65,ease:'power3.out'});
+  gsap.from('#page-dashboard .stat-card',{opacity:0,y:16,duration:.5,stagger:.1,delay:.25,ease:'power2.out'});
+  gsap.from('#page-dashboard .up-area',{opacity:0,y:16,duration:.55,delay:.65,ease:'power2.out'});
+}
+
+// ===== PROFILE INIT =====
+function initProf(){
+  if(!CU)return;
+  document.getElementById('PN').textContent=CU.name;
+  document.getElementById('PA').textContent=CU.name[0].toUpperCase();
+  document.getElementById('PNMV').textContent=CU.name;
+  document.getElementById('PEMV').textContent=CU.email;
+  document.getElementById('PNN').value=CU.name;
+  ['CPW','NPW','CNPW'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('PALRT').innerHTML='';
+  if(window.innerWidth<700)document.getElementById('PWG').style.gridTemplateColumns='1fr';
+  gsap.from('#page-profile .pg-hdr',{opacity:0,y:16,duration:.6,ease:'power3.out'});
+  gsap.from('#page-profile .i-card',{opacity:0,y:20,duration:.5,stagger:.1,delay:.2,ease:'power2.out'});
+}
+
+// ===== AUTH =====
+function doSignIn(){
+  const em=document.getElementById('SI_EM').value.trim(),pw=document.getElementById('SI_PW').value.trim();
+  const er=document.getElementById('SI_ERR');
+  if(users[em]&&users[em].password===pw){CU={email:em,name:users[em].name,password:pw};er.classList.remove('show');goTo('dashboard');}
+  else er.classList.add('show');
+}
+function doSignUp(){
+  const nm=document.getElementById('SU_NM').value.trim(),em=document.getElementById('SU_EM').value.trim(),pw=document.getElementById('SU_PW').value.trim(),cf=document.getElementById('SU_CF').value.trim();
+  const er=document.getElementById('SU_ERR');
+  const se=m=>{er.textContent='⚠️ '+m;er.classList.add('show');};
+  er.classList.remove('show');
+  if(!nm||!em||!pw)return se('All fields are required.');
+  if(pw!==cf)return se('Passwords do not match.');
+  if(pw.length<6)return se('Password must be at least 6 characters.');
+  if(users[em])return se('Email already registered. Please sign in.');
+  users[em]={name:nm,password:pw};CU={email:em,name:nm,password:pw};goTo('dashboard');
+}
+function doSignOut(){CU=null;goTo('landing');}
+
+// ===== PROFILE ACTIONS =====
+function saveName(){
+  const n=document.getElementById('PNN').value.trim();
+  if(!n){profAlert('Name cannot be empty.',false);return;}
+  CU.name=n;users[CU.email].name=n;initProf();profAlert('Name updated successfully! ✅',true);
+}
+function savePw(){
+  const c=document.getElementById('CPW').value,np=document.getElementById('NPW').value,cp=document.getElementById('CNPW').value;
+  if(c!==CU.password){profAlert('Current password is incorrect.',false);return;}
+  if(np.length<6){profAlert('New password must be at least 6 characters.',false);return;}
+  if(np!==cp){profAlert('New passwords do not match.',false);return;}
+  CU.password=np;users[CU.email].password=np;
+  ['CPW','NPW','CNPW'].forEach(id=>document.getElementById(id).value='');
+  profAlert('Password changed successfully! ✅',true);
+}
+function profAlert(msg,ok){
+  const el=document.getElementById('PALRT');
+  el.innerHTML=`<div class="alert ${ok?'al-ok':'al-er'}">${msg}</div>`;
+  setTimeout(()=>{if(el.firstChild)gsap.to(el.firstChild,{opacity:0,y:-8,duration:.4,onComplete:()=>el.innerHTML=''});},3800);
+}
+
+// ===== UTILS =====
+function tpw(id,btn){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.textContent=i.type==='password'?'👁':'🙈';}
+function chkStr(v,bid,lid){
+  let s=0;if(v.length>=6)s++;if(v.length>=10)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^a-zA-Z0-9]/.test(v))s++;
+  const lv=[{p:'0%',c:'transparent',l:''},{p:'25%',c:'#ef4444',l:'Weak'},{p:'50%',c:'#f97316',l:'Fair'},{p:'75%',c:'#eab308',l:'Good'},{p:'100%',c:'#22c55e',l:'Strong 💪'}];
+  const l=Math.min(s,4),bar=document.getElementById(bid),lbl=document.getElementById(lid);
+  if(bar){bar.style.width=lv[l].p;bar.style.background=lv[l].c;}
+  if(lbl){lbl.textContent=v.length>0?lv[l].l:'';lbl.style.color=lv[l].c;}
+}
+
+// ===== BOOT =====
+gsap.from('#page-landing .hero-l > *',{opacity:0,y:40,stagger:.15,duration:.9,ease:'power3.out',delay:.3});
+gsap.from('#page-landing .ai-card',{opacity:0,x:60,duration:1,ease:'power3.out',delay:.6});
+
+// ===== MAGNETIC BUTTONS =====
+document.querySelectorAll('.hero-btn,.nav-btn,.btn-sv').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*0.18,y:(e.clientY-r.top-r.height/2)*0.18,duration:.3});
+  });
+  btn.addEventListener('mouseleave',()=>{gsap.to(btn,{x:0,y:0,duration:.3});});
+});
+</script>
 </body>
 </html>
-```
-
----
-
-# Flask Route
-
-Add this inside `app.py`
-
-```python
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route('/')
-def landing():
-    return render_template('landing.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-```
-
----
-
-# Run Project
-
-```bash
-python app.py
-```
-
-Then open:
-
-```bash
-http://127.0.0.1:5000
-```
-
----
-
-# Add Team Photos
-
-Create this folder:
-
-```bash
-static/images/
-```
-
-Add your images:
-
-```bash
-vidhi.jpg
-divyanshi.jpg
-vishwa.jpg
-shivani.jpg
-```
-
-Then Flask will automatically show them inside glowing futuristic team cards 😭🔥
-
----
-
-# Features Included
-
-✅ Mouse Reactive Background
-✅ Futuristic AI Theme
-✅ Animated Particles
-✅ Custom AI Cursor
-✅ Magnetic Hover Buttons
-✅ Scanner Animation
-✅ Glassmorphism UI
-✅ Team Cards
-✅ Typing Animation
-✅ 3D Parallax Motion
-✅ Flask Compatible

@@ -1,419 +1,874 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecruiterVision AI - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-<<<<<<< HEAD
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        body {
-            background-color: #f8fafc;
-            color: #1e293b;
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 260px;
-            background-color: #0f172a;
-            color: #f8fafc;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #1e293b;
-        }
-        .sidebar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            letter-spacing: -0.025em;
-        }
-        .sidebar-brand span {
-            color: #3b82f6;
-        }
-        .sidebar-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            color: #94a3b8;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        .sidebar-menu li a.active, .sidebar-menu li a:hover {
-            background-color: #1e3a8a;
-            color: #ffffff;
-        }
-        .main-content {
-            flex: 1;
-            padding: 2.5rem;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 1.5rem;
-        }
-        .header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .avatar {
-            width: 36px;
-            height: 36px;
-            background-color: #2563eb;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-        }
-        .card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: #0f172a;
-        }
-        .upload-zone {
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            padding: 3.5rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background-color: #f8fafc;
-        }
-        .upload-zone:hover {
-            border-color: #2563eb;
-            background-color: rgba(37, 99, 235, 0.01);
-        }
-        .upload-zone p {
-            font-size: 0.95rem;
-            color: #64748b;
-            margin-top: 0.5rem;
-        }
-        .jd-input {
-            width: 100%;
-            height: 130px;
-            padding: 0.75rem 1rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            resize: none;
-            outline: none;
-            background-color: #f8fafc;
-            transition: all 0.2s ease;
-        }
-        .jd-input:focus {
-            border-color: #2563eb;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
-        }
-        .action-btn {
-            padding: 0.8rem 1.75rem;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .action-btn:hover {
-            background-color: #1d4ed8;
-        }
-        .stats-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-        .stat-box {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.25rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .stat-box .title {
-            font-size: 0.875rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-        .stat-box .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
-        }
-=======
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background-color: #0f172a; color: #f8fafc; padding: 2rem 1.5rem; display: flex; flex-direction: column; border-right: 1px solid #1e293b; }
-        .sidebar-brand { font-size: 1.5rem; font-weight: 700; margin-bottom: 3rem; letter-spacing: -0.025em; }
-        .sidebar-brand span { color: #3b82f6; }
-        .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-        .sidebar-menu li a { display: flex; align-items: center; padding: 0.75rem 1rem; color: #94a3b8; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; }
-        .sidebar-menu li a.active, .sidebar-menu li a:hover { background-color: #1e3a8a; color: #ffffff; }
-        .main-content { flex: 1; padding: 2.5rem; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; }
-        .header h1 { font-size: 1.75rem; font-weight: 700; color: #0f172a; }
-        .user-profile { display: flex; align-items: center; gap: 0.75rem; }
-        .avatar { width: 36px; height: 36px; background-color: #2563eb; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 0.875rem; }
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; }
-        .card { background: #ffffff; border-radius: 12px; padding: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02); }
-        .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: #0f172a; }
-        .upload-zone { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 3.5rem 2rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: #f8fafc; }
-        .upload-zone:hover { border-color: #2563eb; background-color: rgba(37, 99, 235, 0.01); }
-        .upload-zone p { font-size: 0.95rem; color: #64748b; margin-top: 0.5rem; }
-        .jd-input { width: 100%; height: 130px; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; resize: none; outline: none; background-color: #f8fafc; transition: all 0.2s ease; }
-        .jd-input:focus { border-color: #2563eb; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08); }
-        .action-btn { padding: 0.8rem 1.75rem; background-color: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
-        .action-btn:hover { background-color: #1d4ed8; }
-        .stats-panel { display: flex; flex-direction: column; gap: 1.25rem; }
-        .stat-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; }
-        .stat-box .title { font-size: 0.875rem; color: #64748b; font-weight: 500; }
-        .stat-box .value { font-size: 1.5rem; font-weight: 700; color: #2563eb; }
-        .logout-btn { color: #f8fafc; text-decoration: none; background: #b91c1c; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
-        .logout-btn:hover { background: #991b1b; }
->>>>>>> 16e51dd (New updates)
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>RecruiterVision AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080e1a;--bg2:#0c1424;--card:#111827;--card2:#162032;
+  --border:rgba(99,179,237,0.1);--border2:rgba(99,179,237,0.22);
+  --text:#e8f0ff;--text2:#8899bb;--text3:#4a5a7a;
+  --accent:#3b82f6;--accent2:#06b6d4;--accent3:#8b5cf6;
+  --success:#10b981;--warn:#f59e0b;--danger:#ef4444;
+  --glow:rgba(59,130,246,0.18);--pill:#1a2540;
+  --score-ring:#1e293b;
+}
+[data-theme="light"]{
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#ffffff;--card2:#f7f9ff;
+  --border:rgba(59,130,246,0.12);--border2:rgba(59,130,246,0.28);
+  --text:#0a1628;--text2:#3d5080;--text3:#8899cc;
+  --glow:rgba(59,130,246,0.08);--pill:#e8f0ff;
+  --score-ring:#e2e8f0;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;display:flex;
+  transition:background .35s,color .35s;
+  overflow-x:hidden;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────── */
+.sidebar{
+  width:220px;min-height:100vh;
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  padding:24px 14px;position:fixed;
+  top:0;left:0;z-index:200;
+  transition:background .35s,border-color .35s;
+  background-image:radial-gradient(circle,rgba(99,179,237,0.07) 1px,transparent 1px);
+  background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 65%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 65%,transparent 100%);
+}
+.sidebar::before{
+  content:'';position:absolute;
+  top:8%;left:0;width:3px;height:60%;
+  background:linear-gradient(180deg,transparent,#3b82f6 40%,#8b5cf6 75%,transparent);
+  border-radius:0 4px 4px 0;opacity:.7;
+}
+.brand{
+  font-family:'Syne',sans-serif;
+  font-size:1.05rem;font-weight:800;
+  color:var(--text);
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:2.5rem;letter-spacing:-.02em;
+}
+.brand-orb{
+  width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;
+  box-shadow:0 0 16px rgba(139,92,246,.4);
+}
+.brand em{color:#60a5fa;font-style:normal}
+.nav{list-style:none;flex:1;display:flex;flex-direction:column;gap:2px}
+.nav li a{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 11px;border-radius:10px;
+  color:var(--text2);text-decoration:none;
+  font-size:.82rem;font-weight:500;
+  transition:all .2s ease;
+}
+.nav li a:hover{background:rgba(59,130,246,.08);color:var(--text);padding-left:14px}
+.nav li.on a{
+  background:linear-gradient(90deg,rgba(59,130,246,.18),rgba(139,92,246,.06));
+  color:#fff;font-weight:600;
+  box-shadow:inset 3px 0 0 #3b82f6;
+  padding-left:14px;
+}
+.nav-ico{font-size:.95rem}
+.nav-div{height:1px;background:var(--border);margin:8px 4px}
+.sidebar-foot{
+  border-top:1px solid var(--border);
+  margin-top:8px;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(59,130,246,.05);
+  border-radius:10px;padding:10px;
+}
+.ava{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0;
+  box-shadow:0 0 10px rgba(99,102,241,.3);
+}
+.foot-name{font-size:.82rem;font-weight:600;color:var(--text)}
+.foot-role{font-size:.68rem;color:var(--text3);margin-top:1px}
+
+/* ── MAIN ────────────────────────────────────────── */
+.main{flex:1;margin-left:220px;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── TOPBAR ──────────────────────────────────────── */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 26px;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;
+  transition:background .35s,border-color .35s;
+  backdrop-filter:blur(12px);
+}
+.topbar-l .page-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.05rem;font-weight:700;color:var(--text);
+}
+.topbar-l .page-sub{font-size:.72rem;color:var(--text3);margin-top:2px}
+.topbar-r{display:flex;align-items:center;gap:12px}
+
+.theme-toggle{
+  display:flex;align-items:center;gap:8px;
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:999px;padding:6px 12px 6px 7px;
+  cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;
+}
+.theme-toggle:hover{border-color:var(--accent)}
+.trk{
+  width:32px;height:16px;border-radius:999px;
+  background:var(--accent);position:relative;transition:.3s;
+}
+.thm{
+  width:12px;height:12px;border-radius:50%;background:#fff;
+  position:absolute;top:2px;left:2px;transition:transform .3s ease;
+}
+[data-theme="light"] .thm{transform:translateX(16px)}
+.tlabel{font-size:.75rem;font-weight:500;color:var(--text2);white-space:nowrap}
+
+.user-chip{
+  display:flex;align-items:center;gap:9px;
+  background:var(--pill);border:1px solid var(--border);
+  border-radius:999px;padding:5px 14px 5px 5px;
+}
+.chip-ava{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.73rem;font-weight:700;color:#fff;
+}
+.chip-hi{font-size:.65rem;color:var(--text3)}
+.chip-name{font-size:.8rem;font-weight:600;color:var(--text)}
+
+.logout{
+  padding:6px 14px;background:transparent;
+  border:1px solid var(--border);border-radius:8px;
+  font-size:.78rem;font-weight:500;color:var(--text2);
+  cursor:pointer;text-decoration:none;
+  transition:all .2s;font-family:'DM Sans',sans-serif;
+}
+.logout:hover{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
+
+/* ── CONTENT ─────────────────────────────────────── */
+.content{padding:24px;display:flex;flex-direction:column;gap:20px}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.scard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px 18px;
+  display:flex;align-items:center;gap:14px;
+  transition:background .35s,border .35s,transform .2s;
+}
+.scard:hover{transform:translateY(-2px);border-color:var(--border2)}
+.sico{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+}
+.si-blue{background:rgba(59,130,246,.14)}
+.si-purple{background:rgba(139,92,246,.14)}
+.si-cyan{background:rgba(6,182,212,.14)}
+.si-green{background:rgba(16,185,129,.14)}
+.slabel{font-size:.72rem;color:var(--text3);font-weight:500}
+.sval{font-size:1.55rem;font-weight:700;color:var(--text);margin-top:2px;font-family:'Syne',sans-serif}
+.sdelta{font-size:.7rem;color:var(--success);margin-top:2px}
+
+/* Grid */
+.grid2{display:grid;grid-template-columns:1fr 360px;gap:18px}
+.grid2l{display:flex;flex-direction:column;gap:16px}
+.grid2r{display:flex;flex-direction:column;gap:14px}
+
+/* Card */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:22px;
+  transition:background .35s,border .35s;
+}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.card-title{
+  font-family:'Syne',sans-serif;
+  font-size:.95rem;font-weight:700;color:var(--text);
+}
+.badge{
+  background:rgba(59,130,246,.14);color:#60a5fa;
+  font-size:.65rem;font-weight:700;padding:3px 9px;
+  border-radius:999px;border:1px solid rgba(59,130,246,.25);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.03em;
+}
+.badge-g{background:rgba(16,185,129,.12);color:#34d399;border-color:rgba(16,185,129,.2)}
+.badge-p{background:rgba(139,92,246,.12);color:#a78bfa;border-color:rgba(139,92,246,.2)}
+
+/* Upload zone */
+.upzone{
+  border:2px dashed var(--border2);
+  border-radius:12px;padding:28px 20px;text-align:center;
+  cursor:pointer;background:rgba(59,130,246,.03);
+  transition:all .25s;position:relative;
+}
+.upzone:hover,.upzone.drag{
+  border-color:var(--accent);background:rgba(59,130,246,.07);
+}
+.upzone input{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.up-ico{font-size:2rem;display:block;margin-bottom:10px}
+.up-t{font-size:.84rem;color:var(--text2)}
+.up-t b{color:var(--accent)}
+.up-s{font-size:.72rem;color:var(--text3);margin-top:4px}
+#file-name{
+  margin-top:10px;font-size:.75rem;color:var(--success);
+  font-family:'JetBrains Mono',monospace;display:none;
+}
+
+/* JD */
+.flabel{font-size:.76rem;font-weight:600;color:var(--text2);display:block;margin:14px 0 6px}
+.jd-area{
+  width:100%;height:108px;padding:10px 13px;
+  border:1px solid var(--border);border-radius:10px;
+  font-size:.82rem;resize:none;outline:none;
+  background:var(--card2);color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  transition:border .25s,box-shadow .25s;
+}
+.jd-area::placeholder{color:var(--text3)}
+.jd-area:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(59,130,246,.12)}
+
+/* Submit btn */
+.run-btn{
+  margin-top:13px;width:100%;padding:11px;
+  background:linear-gradient(135deg,#2563eb,#6d28d9);
+  color:#fff;border:none;border-radius:11px;
+  font-size:.88rem;font-weight:600;cursor:pointer;
+  font-family:'Syne',sans-serif;letter-spacing:.03em;
+  transition:opacity .2s,transform .15s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.run-btn:hover{opacity:.92;transform:translateY(-1px)}
+.run-btn:active{transform:scale(.98)}
+.run-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Spinner */
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .6s linear infinite;display:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── RESULTS SECTION ───────────────────────────────── */
+#results{display:none;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Score ring */
+.score-wrap{display:flex;align-items:center;gap:22px;margin-bottom:18px}
+.ring-container{flex-shrink:0;position:relative;width:110px;height:110px}
+.ring-container svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--score-ring);stroke-width:9}
+.ring-fill{
+  fill:none;stroke-width:9;stroke-linecap:round;
+  transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);
+}
+.ring-text{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.ring-pct{
+  font-family:'Syne',sans-serif;font-size:1.45rem;
+  font-weight:800;color:var(--text);
+}
+.ring-lbl{font-size:.65rem;color:var(--text3);margin-top:-2px}
+.score-info h3{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;
+}
+.score-info p{font-size:.78rem;color:var(--text2);line-height:1.5}
+
+/* Roast banner */
+.roast-box{
+  position:relative;
+  border:1px solid rgba(139,92,246,.35);
+  border-left:4px solid var(--accent3);
+  background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(59,130,246,.06));
+  border-radius:0 12px 12px 0;
+  padding:14px 16px 14px 18px;
+  font-size:.83rem;color:var(--text);line-height:1.65;
+  font-style:italic;margin-bottom:14px;
+  box-shadow:0 4px 24px rgba(139,92,246,.12);
+  overflow:hidden;
+}
+.roast-box::before{
+  content:'🔥 AI Roast';
+  display:block;
+  font-style:normal;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.63rem;font-weight:700;
+  color:#a78bfa;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:7px;
+}
+.roast-box::after{
+  content:'';position:absolute;
+  top:-30px;right:-30px;
+  width:100px;height:100px;
+  background:radial-gradient(circle,rgba(139,92,246,.18),transparent 70%);
+  pointer-events:none;
+}
+
+/* Skill tags */
+.skill-sec{margin-bottom:16px}
+.skill-sec-title{font-size:.75rem;font-weight:600;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+  padding:4px 11px;border-radius:999px;
+  font-size:.75rem;font-weight:500;
+  font-family:'JetBrains Mono',monospace;
+  border:1px solid var(--border2);
+  transition:transform .15s;cursor:default;
+}
+.tag:hover{transform:scale(1.05)}
+.tag-exist{background:rgba(16,185,129,.1);color:#34d399;border-color:rgba(16,185,129,.2)}
+.tag-miss{background:rgba(239,68,68,.08);color:#f87171;border-color:rgba(239,68,68,.18)}
+.tag-rec{background:rgba(59,130,246,.1);color:#60a5fa;border-color:rgba(59,130,246,.2)}
+.tag-imp{background:rgba(245,158,11,.08);color:#fbbf24;border-color:rgba(245,158,11,.18)}
+
+/* Summary */
+.summary-text{
+  font-size:.82rem;color:var(--text2);line-height:1.65;
+  border-left:2px solid var(--border2);padding-left:12px;
+}
+
+/* Right info card */
+.info-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px;
+  transition:background .35s,border .35s;
+}
+.info-title{
+  font-family:'Syne',sans-serif;
+  font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:12px;
+}
+.irow{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--border);
+  font-size:.8rem;transition:border .35s;
+}
+.irow:last-child{border-bottom:none}
+.ikey{color:var(--text3)}
+.ival{font-weight:600;color:var(--text)}
+.ival-b{color:var(--accent);font-weight:600}
+.ival-g{color:var(--success);font-weight:600}
+.ival-w{color:var(--warn);font-weight:600}
+.ival-r{color:var(--danger);font-weight:600}
+
+/* Score bar */
+.score-bar-wrap{margin-top:16px}
+.score-bar-label{
+  display:flex;justify-content:space-between;
+  font-size:.72rem;color:var(--text3);margin-bottom:6px;
+}
+.score-bar-track{
+  height:6px;background:var(--score-ring);
+  border-radius:999px;overflow:hidden;
+}
+.score-bar-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#2563eb,#8b5cf6);
+  width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+/* Similarity meter */
+.sim-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.sim-label{font-size:.72rem;color:var(--text3);white-space:nowrap;width:90px}
+.sim-track{flex:1;height:4px;background:var(--score-ring);border-radius:999px;overflow:hidden}
+.sim-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#06b6d4,#3b82f6);width:0;transition:width 1s ease}
+.sim-val{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text2);width:38px;text-align:right}
+
+/* ── FLASH ─────────────────────────────────────────── */
+.flash-area{padding:0 24px;margin-top:12px}
+.flash{
+  padding:10px 16px;border-radius:10px;font-size:.82rem;margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;
+}
+.flash-e{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.flash-s{background:rgba(16,185,129,.1);color:#34d399;border:1px solid rgba(16,185,129,.2)}
+
+/* Loading overlay */
+.loading-overlay{
+  position:fixed;inset:0;background:rgba(8,14,26,.75);
+  display:none;align-items:center;justify-content:center;
+  z-index:999;flex-direction:column;gap:14px;
+  backdrop-filter:blur(4px);
+}
+.loading-overlay.show{display:flex}
+.big-spinner{
+  width:48px;height:48px;border:4px solid rgba(59,130,246,.2);
+  border-top-color:#3b82f6;border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+.loading-overlay p{font-size:.9rem;color:#60a5fa;font-family:'JetBrains Mono',monospace}
+
+/* Progress dots */
+.dots::after{content:'';animation:dots 1.5s infinite}
+@keyframes dots{
+  0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'}
+}
+
+/* Responsive tweak */
+@media(max-width:1000px){
+  .sidebar{width:60px;padding:16px 8px}
+  .brand em,.foot-name,.foot-role,.nav li a span,.nav-ico+span{display:none}
+  .brand-orb{margin:auto}
+  .main{margin-left:60px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand">RecruiterVision<span>AI</span></div>
-        <ul class="sidebar-menu">
-            <li><a href="#" class="active">Dashboard</a></li>
-            <li><a href="#">Analysis History</a></li>
-            <li><a href="#">Skill Intelligence</a></li>
-            <li><a href="#">Settings</a></li>
-        </ul>
-        <div style="margin-top: auto; padding-top: 1rem;">
-            <a href="{{ url_for('logout') }}" class="logout-btn">Log Out Workspace</a>
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="big-spinner"></div>
+  <p class="dots">Analysing resume</p>
+</div>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-orb">RV</div>
+    <span>Recruiter<em>Vision</em></span>
+  </div>
+  <ul class="nav">
+    <li class="on"><a href="#"><span class="nav-ico">📊</span> <span>Dashboard</span></a></li>
+    <li><a href="#"><span class="nav-ico">📁</span> <span>History</span></a></li>
+    <li><a href="#"><span class="nav-ico">🧠</span> <span>Skills DB</span></a></li>
+    <li><a href="#"><span class="nav-ico">⚙️</span> <span>Settings</span></a></li>
+  </ul>
+  <div class="sidebar-foot">
+    <div class="ava" id="sidebarAva">R</div>
+    <div>
+      <div class="foot-name" id="sidebarName">Recruiter</div>
+      <div class="foot-role">ATS Analyst</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-l">
+      <div class="page-title">Intelligence Dashboard</div>
+      <div class="page-sub">Resume · JD · Skill Gap · ATS</div>
+    </div>
+    <div class="topbar-r">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="trk"><div class="thm"></div></div>
+        <span class="tlabel" id="tlabel">Light mode</span>
+      </button>
+      <div class="user-chip">
+        <div class="chip-ava" id="chipAva">R</div>
+        <div>
+          <div class="chip-hi">Welcome back</div>
+          <div class="chip-name" id="chipName">Recruiter</div>
         </div>
+      </div>
+      <a href="/logout" class="logout">Logout</a>
+    </div>
+  </div>
+
+  <!-- Flash messages -->
+  <div class="flash-area" id="flashArea"></div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- Stats Row -->
+    <div class="stats">
+      <div class="scard">
+        <div class="sico si-blue">📄</div>
+        <div>
+          <div class="slabel">Total Scanned</div>
+          <div class="sval" id="statTotal">0</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="sico si-purple">🎯</div>
+        <div>
+          <div class="slabel">Mean ATS Score</div>
+          <div class="sval" id="statMean">—</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="sico si-cyan">⚡</div>
+        <div>
+          <div class="slabel">Top Score</div>
+          <div class="sval" id="statTop">—</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="sico si-green">✅</div>
+        <div>
+          <div class="slabel">Skills Detected</div>
+          <div class="sval" id="statSkills">—</div>
+        </div>
+      </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1>Workspace</h1>
-            <div class="user-profile">
-                <div class="avatar">U</div>
-                <span style="font-weight: 500; font-size: 0.95rem; color: #334155; margin-right: 10px;">Active User</span>
+    <!-- Main Grid -->
+    <div class="grid2">
+
+      <!-- LEFT -->
+      <div class="grid2l">
+
+        <!-- Upload Panel -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Analysis Pipeline</span>
+            <span class="badge">AI Powered</span>
+            <span class="badge badge-p" style="margin-left:auto">v2.0</span>
+          </div>
+
+          <form id="analyseForm">
+            <div class="upzone" id="dropZone">
+              <input type="file" id="resumeFile" name="resume_file" accept=".pdf,.docx" onchange="onFileChange(this)"/>
+              <span class="up-ico">📂</span>
+              <p class="up-t">Drag & drop resume or <b>browse files</b></p>
+              <p class="up-s">PDF or DOCX · Max 10MB</p>
+              <p id="file-name"></p>
             </div>
+
+            <label class="flabel">Job Description Matrix</label>
+            <textarea class="jd-area" id="jdText" name="job_description"
+              placeholder="Paste the complete job description here for semantic gap analysis…"></textarea>
+
+            <button type="submit" class="run-btn" id="runBtn">
+              <span id="btnSpinner" class="spinner"></span>
+              <span id="btnText">⚡ Execute Analysis</span>
+            </button>
+          </form>
         </div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div style="padding: 1rem; margin-bottom: 1.5rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
-                {% if category == 'error' %} background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5;
-                {% else %} background-color: #dcfce7; color: #166534; border: 1px solid #86efac; {% endif %}">
-                {{ message }}
+        <!-- Results: Score + Roast -->
+        <div id="results">
+          <div class="card" style="margin-bottom:0">
+            <div class="card-head">
+              <span class="card-title">Match Report</span>
+              <span class="badge badge-g" id="scoreBadge">—</span>
+            </div>
+
+            <div class="score-wrap">
+              <div class="ring-container">
+                <svg viewBox="0 0 110 110" width="110" height="110">
+                  <circle class="ring-bg" cx="55" cy="55" r="48"/>
+                  <circle class="ring-fill" id="ringFill" cx="55" cy="55" r="48"
+                    stroke-dasharray="301.6" stroke-dashoffset="301.6" stroke="#3b82f6"/>
+                </svg>
+                <div class="ring-text">
+                  <span class="ring-pct" id="ringPct">0%</span>
+                  <span class="ring-lbl">ATS Match</span>
+                </div>
               </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-
-        <div class="dashboard-grid">
-            
-<<<<<<< HEAD
-            <form action="{{ url_for('upload_resume') }}" method="POST" enctype="multipart/form-data" id="uploadForm" class="card" style="margin: 0;">
-                <h3>New Analysis Pipeline</h3>
-                
-                <input type="file" id="fileInput" name="resume_file" accept=".pdf" style="display: none;" onchange="updateFileName()">
-                
-                <div class="upload-zone" onclick="triggerBrowse()" id="dropZone" style="margin-bottom: 1.5rem;">
-                    <p id="uploadText">Drag and drop applicant resume here, or <span style="color: #2563eb; font-weight:600; text-decoration: underline;">browse files</span></p>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Supports PDF or standard text documents</p>
-=======
-            <form action="{{ url_for('upload_resume') }}" method="POST" enctype="multipart/form-data" class="card">
-                <h3>New Analysis Pipeline</h3>
-                
-                <input type="file" id="fileInput" name="resume_file" accept=".pdf, .docx" style="display: none;" onchange="updateFileName()">
-                
-                <div class="upload-zone" onclick="triggerBrowse()" id="dropZone" style="margin-bottom: 1.5rem;">
-                    <p id="uploadText">Drag and drop applicant resume here, or <span style="color: #2563eb; font-weight:600; text-decoration: underline;">browse files</span></p>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Supports PDF or Word (.docx) documents</p>
->>>>>>> 16e51dd (New updates)
+              <div class="score-info">
+                <h3 id="scoreHeading">Analysing…</h3>
+                <p id="scoreDesc">Upload a resume and paste a job description to begin.</p>
+                <div class="score-bar-wrap">
+                  <div class="score-bar-label"><span>Match strength</span><span id="barPct">0%</span></div>
+                  <div class="score-bar-track"><div class="score-bar-fill" id="scoreBarFill"></div></div>
                 </div>
-                
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="font-size: 0.875rem; font-weight: 500; color: #475569; display: block; margin-bottom: 0.5rem;">Target Job Description (JD) Matrix</label>
-                    <textarea class="jd-input" name="job_description" placeholder="Paste structural job description fields here for system semantic analysis..."></textarea>
-                </div>
-
-                <button type="submit" class="action-btn">Execute Matching Algorithm</button>
-            </form>
-
-            <div class="stats-panel">
-                <div class="stat-box">
-                    <div>
-                        <div class="title">Total Scanned</div>
-                        <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Lifetime count</div>
-                    </div>
-                    <div class="value" style="color: #0f172a;">{% if score is not none %}1{% else %}0{% endif %}</div>
-                </div>
-                
-                <div class="stat-box">
-                    <div>
-                        <div class="title">Mean ATS Match</div>
-                        <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Percentage ratio</div>
-                    </div>
-                    <div class="value">
-                        {% if score is not none %}{{ score }}%{% else %}--{% endif %}
-                    </div>
-                </div>
+              </div>
             </div>
 
-        </div>
+            <!-- Roast -->
+            <div class="roast-box" id="roastBox" style="display:none"></div>
 
-<<<<<<< HEAD
-=======
-        {% if summary %}
-        <div class="card" style="margin-top: 2rem; border-left: 4px solid #2563eb;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="margin-bottom: 0; color: #1e3a8a;">📄 Resume Parsing Summary</h3>
-                <span style="font-size: 0.85rem; background-color: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600;">
-                    File: {{ filename }}
-                </span>
+            <!-- Summary -->
+            <div id="summaryWrap" style="display:none">
+              <label class="flabel" style="margin-top:4px">Resume Summary</label>
+              <div class="summary-text" id="summaryText"></div>
             </div>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: #334155; background-color: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                {{ summary }}
-            </p>
+          </div>
+
+          <!-- Skills breakdown -->
+          <div class="card" style="margin-top:16px">
+            <div class="card-head">
+              <span class="card-title">Skill Intelligence</span>
+              <span class="badge">Gap Analysis</span>
+            </div>
+
+            <div class="skill-sec" id="secExist" style="display:none">
+              <div class="skill-sec-title">✅ Existing Skills</div>
+              <div class="tags" id="tagsExist"></div>
+            </div>
+
+            <div class="skill-sec" id="secMiss" style="display:none">
+              <div class="skill-sec-title">🔴 Gap Skills (in JD, missing in Resume)</div>
+              <div class="tags" id="tagsMiss"></div>
+            </div>
+
+            <div class="skill-sec" id="secRec" style="display:none">
+              <div class="skill-sec-title">💡 AI Recommended Skills</div>
+              <div class="tags" id="tagsRec"></div>
+            </div>
+
+            <div class="skill-sec" id="secImp" style="display:none">
+              <div class="skill-sec-title">⬆️ Skills to Deepen</div>
+              <div class="tags" id="tagsImp"></div>
+            </div>
+          </div>
         </div>
-        {% endif %}
-        <div style="
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    margin-top:2rem;
-">
 
-{% if recommended_skills %}
+      </div>
 
-<div class="card" style="
-    flex:1;
-    min-width:300px;
-    border-left:4px solid #10b981;
-">
+      <!-- RIGHT -->
+      <div class="grid2r">
 
-<h3 style="color:#065f46;">🚀 AI Recommended Skills</h3>
+        <div class="info-card">
+          <div class="info-title">Quick Steps</div>
+          <div class="irow"><span class="ikey">Step 1</span><span class="ival">📄 Upload Resume</span></div>
+          <div class="irow"><span class="ikey">Step 2</span><span class="ival">📋 Paste JD</span></div>
+          <div class="irow"><span class="ikey">Step 3</span><span class="ival">⚡ Run Analysis</span></div>
+          <div class="irow"><span class="ikey">Step 4</span><span class="ival">🎯 Bridge the Gap</span></div>
+        </div>
 
-<div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <!-- Score meter (shown after analysis) -->
+        <div class="info-card" id="meterCard" style="display:none">
+          <div class="info-title">Score Breakdown</div>
+          <div class="irow"><span class="ikey">ATS Score</span><span id="mAts" class="ival">—</span></div>
+          <div class="irow"><span class="ikey">Existing Skills</span><span id="mExist" class="ival-g">—</span></div>
+          <div class="irow"><span class="ikey">Gap Skills</span><span id="mGap" class="ival-r">—</span></div>
+          <div class="irow"><span class="ikey">Recommended</span><span id="mRec" class="ival-b">—</span></div>
+          <div class="irow"><span class="ikey">To Improve</span><span id="mImp" class="ival-w">—</span></div>
 
-{% for skill in recommended_skills %}
+          <div style="margin-top:14px">
+            <div class="sim-row">
+              <span class="sim-label">Resume ↔ JD</span>
+              <div class="sim-track"><div class="sim-fill" id="simFill"></div></div>
+              <span class="sim-val" id="simVal">—</span>
+            </div>
+          </div>
+        </div>
 
-<span style="
-background:#d1fae5;
-color:#065f46;
-padding:8px 14px;
-border-radius:999px;
-font-size:0.9rem;
-font-weight:600;
-">
-{{ skill }}
-</span>
+        <div class="info-card">
+          <div class="info-title">Tips</div>
+          <div class="irow"><span class="ikey">ATS &lt; 45%</span><span class="ival-r">Critical gap</span></div>
+          <div class="irow"><span class="ikey">45–74%</span><span class="ival-w">Needs work</span></div>
+          <div class="irow"><span class="ikey">75%+</span><span class="ival-g">Strong match</span></div>
+        </div>
 
-{% endfor %}
-
-</div>
-</div>
-
-{% endif %}
-
-
-{% if existing_skills %}
-
-<div class="card" style="
-    flex:1;
-    min-width:300px;
-    border-left:4px solid #2563eb;
-">
-
-<h3 style="color:#1e3a8a;">🧠 Detected Resume Skills</h3>
-
-<div style="display:flex; flex-wrap:wrap; gap:10px;">
-
-{% for skill in existing_skills %}
-
-<span style="
-background:#dbeafe;
-color:#1e3a8a;
-padding:8px 14px;
-border-radius:999px;
-font-size:0.9rem;
-font-weight:600;
-">
-{{ skill }}
-</span>
-
-{% endfor %}
-
-</div>
-</div>
-
-{% endif %}
-
-</div>
-
+      </div>
     </div>
-   
+  </div>
+</div>
 
+<script>
+// ── Theme ──────────────────────────────────
+function toggleTheme(){
+  const r=document.documentElement,l=document.getElementById('tlabel');
+  if(r.getAttribute('data-theme')==='dark'){
+    r.setAttribute('data-theme','light');l.textContent='Dark mode';
+    localStorage.setItem('rv-theme','light');
+  }else{
+    r.setAttribute('data-theme','dark');l.textContent='Light mode';
+    localStorage.setItem('rv-theme','dark');
+  }
+}
+(function(){
+  const s=localStorage.getItem('rv-theme');
+  if(s==='light'){
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('tlabel').textContent='Dark mode';
+  }
+})();
 
+// ── Stats persistence ──────────────────────
+let _scores=JSON.parse(localStorage.getItem('rv-scores')||'[]');
+function updateStats(score,skillCount){
+  _scores.push(score);
+  localStorage.setItem('rv-scores',JSON.stringify(_scores));
+  document.getElementById('statTotal').textContent=_scores.length;
+  const mean=(_scores.reduce((a,b)=>a+b,0)/_scores.length).toFixed(1);
+  document.getElementById('statMean').textContent=mean+'%';
+  document.getElementById('statTop').textContent=Math.max(..._scores).toFixed(1)+'%';
+  document.getElementById('statSkills').textContent=skillCount;
+}
+(function(){
+  if(_scores.length){
+    document.getElementById('statTotal').textContent=_scores.length;
+    const m=(_scores.reduce((a,b)=>a+b,0)/_scores.length).toFixed(1);
+    document.getElementById('statMean').textContent=m+'%';
+    document.getElementById('statTop').textContent=Math.max(..._scores).toFixed(1)+'%';
+  }
+})();
 
+// ── File change ────────────────────────────
+function onFileChange(inp){
+  const fn=document.getElementById('file-name');
+  if(inp.files&&inp.files[0]){
+    fn.textContent='📎 '+inp.files[0].name;
+    fn.style.display='block';
+  }
+}
 
+// ── Drag & drop ────────────────────────────
+const dz=document.getElementById('dropZone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+dz.addEventListener('drop',e=>{
+  e.preventDefault();dz.classList.remove('drag');
+  const f=e.dataTransfer.files[0];
+  if(f){
+    document.getElementById('resumeFile').files=e.dataTransfer.files;
+    onFileChange({files:[f]});
+  }
+});
 
+// ── Flash ──────────────────────────────────
+function flash(msg,type='e'){
+  const a=document.getElementById('flashArea');
+  const d=document.createElement('div');
+  d.className='flash flash-'+type;d.textContent=msg;
+  a.appendChild(d);setTimeout(()=>d.remove(),4000);
+}
 
->>>>>>> 16e51dd (New updates)
-    <script>
-        function triggerBrowse() {
-            document.getElementById('fileInput').click();
-        }
+// ── Animate ring ───────────────────────────
+function animateRing(pct){
+  const r=48,circ=2*Math.PI*r;
+  const fill=document.getElementById('ringFill');
+  const offset=circ-(pct/100)*circ;
+  fill.style.strokeDashoffset=offset;
+  // Color
+  fill.style.stroke=pct>=75?'#10b981':pct>=45?'#f59e0b':'#ef4444';
+  document.getElementById('ringPct').textContent=pct.toFixed(1)+'%';
+  document.getElementById('scoreBarFill').style.width=pct+'%';
+  document.getElementById('barPct').textContent=pct.toFixed(1)+'%';
+}
 
-        function updateFileName() {
-            const input = document.getElementById('fileInput');
-            const textLabel = document.getElementById('uploadText');
-            if (input.files.length > 0) {
-                textLabel.innerHTML = `Selected File: <strong style="color: #1e3a8a;">${input.files[0].name}</strong>`;
-            }
-        }
-    </script>
+// ── Score text ─────────────────────────────
+function scoreText(s){
+  if(s>=75)return{h:'Strong Match 💪',d:'Your resume aligns well with the JD. Focus on deepening skills already listed.'};
+  if(s>=45)return{h:'Moderate Match ⚠️',d:'Significant skill gaps detected. Add the missing skills to your resume.'};
+  return{h:'Critical Mismatch 🚨',d:'Major gaps between your resume and the JD. Rebuild the skills section urgently.'};
+}
+
+// ── Tags renderer ──────────────────────────
+function renderTags(containerId,sectionId,skills,cls){
+  if(!skills||!skills.length)return;
+  const sec=document.getElementById(sectionId);
+  const cont=document.getElementById(containerId);
+  sec.style.display='block';cont.innerHTML='';
+  skills.forEach(s=>{
+    const t=document.createElement('span');
+    t.className='tag '+cls;t.textContent=s;cont.appendChild(t);
+  });
+}
+
+// ── Badge color ────────────────────────────
+function scoreBadgeClass(s){
+  const b=document.getElementById('scoreBadge');
+  b.textContent=s.toFixed(1)+'%';
+  b.className='badge'+(s>=75?' badge-g':s>=45?'':' ');
+  b.style.background=s>=75?'rgba(16,185,129,.14)':s>=45?'rgba(245,158,11,.12)':'rgba(239,68,68,.1)';
+  b.style.color=s>=75?'#34d399':s>=45?'#fbbf24':'#f87171';
+  b.style.borderColor=s>=75?'rgba(16,185,129,.25)':s>=45?'rgba(245,158,11,.2)':'rgba(239,68,68,.2)';
+}
+
+// ── Form submit ────────────────────────────
+document.getElementById('analyseForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const file=document.getElementById('resumeFile').files[0];
+  const jd=document.getElementById('jdText').value.trim();
+  if(!file){flash('Koi file select nahi ki bhai! 😤');return}
+  if(!jd){flash('Job Description bhool gaye? Serious ho? 🙄');return}
+
+  // Loading state
+  document.getElementById('loadingOverlay').classList.add('show');
+  const btn=document.getElementById('runBtn');
+  btn.disabled=true;
+  document.getElementById('btnSpinner').style.display='inline-block';
+  document.getElementById('btnText').textContent='Analysing…';
+
+  const fd=new FormData();
+  fd.append('resume_file',file);
+  fd.append('job_description',jd);
+
+  try{
+    const res=await fetch('/analyse',{method:'POST',body:fd});
+    const data=await res.json();
+    if(data.error){flash(data.error);return}
+
+    // Show results
+    const score=data.score||0;
+    document.getElementById('results').style.display='block';
+    setTimeout(()=>animateRing(score),100);
+    scoreBadgeClass(score);
+    const st=scoreText(score);
+    document.getElementById('scoreHeading').textContent=st.h;
+    document.getElementById('scoreDesc').textContent=st.d;
+
+    // Roast
+    if(data.roast){
+      const rb=document.getElementById('roastBox');
+      rb.textContent='"'+data.roast+'"';
+      rb.style.display='block';
+    }
+
+    // Summary
+    if(data.summary){
+      document.getElementById('summaryText').textContent=data.summary;
+      document.getElementById('summaryWrap').style.display='block';
+    }
+
+    // Tags
+    renderTags('tagsExist','secExist',data.existing_skills,'tag-exist');
+    renderTags('tagsMiss','secMiss',data.jd_gap_skills,'tag-miss');
+    renderTags('tagsRec','secRec',data.recommended_skills,'tag-rec');
+    renderTags('tagsImp','secImp',data.skills_to_improve,'tag-imp');
+
+    // Right panel meter
+    document.getElementById('meterCard').style.display='block';
+    document.getElementById('mAts').textContent=score.toFixed(1)+'%';
+    document.getElementById('mAts').className='ival'+(score>=75?' ival-g':score>=45?' ival-w':' ival-r');
+    document.getElementById('mExist').textContent=(data.existing_skills||[]).length;
+    document.getElementById('mGap').textContent=(data.jd_gap_skills||[]).length;
+    document.getElementById('mRec').textContent=(data.recommended_skills||[]).length;
+    document.getElementById('mImp').textContent=(data.skills_to_improve||[]).length;
+
+    // Sim score
+    if(data.jd_similarity_score!=null){
+      const simPct=(data.jd_similarity_score*100).toFixed(1);
+      const simFill=document.getElementById('simFill');
+      const simVal=document.getElementById('simVal');
+      if(simFill) setTimeout(()=>{simFill.style.width=simPct+'%';},200);
+      if(simVal) setTimeout(()=>{simVal.textContent=simPct+'%';},200);
+    }
+
+    // Stats
+    updateStats(score,(data.existing_skills||[]).length);
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+
+  }catch(err){
+    flash('Server error: '+err.message);
+  }finally{
+    document.getElementById('loadingOverlay').classList.remove('show');
+    btn.disabled=false;
+    document.getElementById('btnSpinner').style.display='none';
+    document.getElementById('btnText').textContent='⚡ Execute Analysis';
+  }
+});
+</script>
 </body>
 </html>
