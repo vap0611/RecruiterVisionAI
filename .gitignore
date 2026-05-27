@@ -224,4 +224,11 @@ dataset/
 *.jpg
 *.JPG
 
+__pycache__/
+*.pkl 
+*.keras
+*.h5
+.ipynb_checkpoints
+models/
+
 git add .
