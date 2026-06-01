@@ -169,17 +169,7 @@ RecruiterVisionAI/
 │
 └── README.md
 
-⚙️ Installation
 
-Clone the repository:
-git clone <repository-link>
-cd RecruiterVisionAI
-Install dependencies:
-pip install -r requirements.txt
-Run the application:
-python app.py
-Open:
-http://127.0.0.1:8080
 
 🚧 Limitations
 * Depends on dataset quality
